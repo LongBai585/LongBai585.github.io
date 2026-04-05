@@ -1,0 +1,448 @@
+/* ========== 全局重置 & 二次元风格（使用CSS变量） ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(145deg, var(--bg1) 0%, var(--bg2) 40%, var(--bg3) 100%);
+    font-family: 'Quicksand', 'Noto Sans SC', 'Segoe UI', system-ui;
+    color: var(--text);
+    min-height: 100vh;
+    padding: 2rem 1.5rem;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* 漂浮装饰 */
+body::before {
+    content: "✨⭐🌸🍃";
+    position: absolute;
+    font-size: 70px;
+    top: 20px;
+    left: -30px;
+    opacity: 0.15;
+    white-space: nowrap;
+    pointer-events: none;
+    rotate: -15deg;
+    z-index: 0;
+}
+
+body::after {
+    content: "✧ ﾟ  *  ✧  *  ﾟ ✧";
+    position: absolute;
+    bottom: 30px;
+    right: 10px;
+    font-size: 32px;
+    color: var(--primary);
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.blog-container {
+    max-width: 950px;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(6px);
+    border-radius: 68px 68px 72px 72px;
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.4), 0 8px 18px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.blog-inner {
+    padding: 2rem;
+}
+
+/* 个人资料区 */
+.profile-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.8rem;
+    align-items: center;
+    margin-bottom: 1.8rem;
+    border-bottom: 2px dashed var(--primary);
+    padding-bottom: 1.8rem;
+}
+
+.avatar-area {
+    flex-shrink: 0;
+    text-align: center;
+}
+
+.avatar-wrapper {
+    width: 130px;
+    height: 130px;
+    margin: 0 auto;
+}
+
+.rotating-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3), 0 0 0 4px rgba(255,255,255,0.8), 0 0 0 7px var(--primary);
+    animation: spinAvatar var(--avatar-speed, 8s) infinite linear;
+    background: #2a2a3e;
+}
+
+@keyframes spinAvatar {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.upload-btn {
+    background: var(--primary);
+    border: none;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 60px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.upload-btn:hover {
+    filter: brightness(0.9);
+    transform: scale(0.97);
+}
+
+.avatar-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.file-input-hidden {
+    display: none;
+}
+
+.avatar-hint {
+    font-size: 0.65rem;
+    margin-top: 5px;
+    color: var(--primary);
+    opacity: 0.8;
+}
+
+.blog-info {
+    flex: 1;
+}
+
+.blog-date {
+    font-size: 0.9rem;
+    background: rgba(0, 0, 0, 0.4);
+    display: inline-block;
+    padding: 0.2rem 1rem;
+    border-radius: 40px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.blog-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    margin-bottom: 0.3rem;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.blog-subtitle {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--secondary);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.blog-desc {
+    background: rgba(0, 0, 0, 0.35);
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    display: inline-block;
+    font-weight: 500;
+}
+
+.divider-cute {
+    margin: 0.8rem 0 0.6rem;
+    border: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary), var(--primary));
+    border-radius: 5px;
+}
+
+.signature {
+    font-size: 0.95rem;
+    font-weight: 500;
+    font-style: italic;
+    opacity: 0.9;
+}
+
+/* 时间+滚动区 */
+.time-ticker-section {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 60px;
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0 1.8rem;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255,255,255,0.15);
+}
+
+.time-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.live-time {
+    text-align: center;
+    font-size: 1.35rem;
+    font-weight: 700;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 0.3rem 1.2rem;
+    border-radius: 60px;
+    color: var(--accent);
+    margin-bottom: 12px;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+}
+
+/* 原跑马灯动画可以删除或注释，改为静态 */
+.scroll-area {
+    width: 100%;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 48px;
+    padding: 0.65rem 1rem;  /* 增加左右内边距 */
+    border: 1px solid rgba(255,255,255,0.2);
+    text-align: center;     /* 打字机文字居中 */
+}
+
+.scroll-content {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--secondary);
+    /* 移除 animation 属性 */
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+}
+
+/* 光标闪烁动画 */
+@keyframes blink {
+    0%, 100% { border-color: transparent; }
+    50% { border-color: var(--primary); }
+}
+.scroll-content {
+    border-right: 2px solid var(--primary);
+    animation: blink 0.8s step-end infinite;
+}
+
+/* 文章页独立样式 */
+.post-full {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    border-radius: 48px;
+    padding: 2rem;
+    margin: 1rem 0;
+}
+
+.post-title-full {
+    font-size: 2rem;
+    color: var(--secondary);
+}
+
+.post-meta {
+    font-size: 0.8rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+}
+
+.post-content {
+    line-height: 1.7;
+    color: #f0f0f0;
+}
+
+.post-content img {
+    max-width: 100%;
+    border-radius: 24px;
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.pagination a {
+    background: rgba(0,0,0,0.5);
+    padding: 6px 12px;
+    border-radius: 40px;
+    color: var(--secondary);
+    text-decoration: none;
+    margin: 0 4px;
+}
+
+footer {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    font-size: 0.7rem;
+    border-top: 1px dashed var(--primary);
+}
+
+.footer-social {
+    margin-bottom: 8px;
+}
+
+.footer-social a {
+    color: var(--secondary);
+    font-size: 1.2rem;
+    margin: 0 8px;
+    transition: 0.2s;
+}
+
+.footer-social a:hover {
+    color: var(--primary);
+    transform: scale(1.1);
+}
+
+@media (max-width: 650px) {
+    .blog-inner { padding: 1.5rem; }
+    .profile-section { flex-direction: column; text-align: center; }
+    .blog-title { font-size: 2rem; }
+    .blog-subtitle { font-size: 1.3rem; justify-content: center; }
+}
+
+/* ========== 音乐播放器样式 ========== */
+.music-player {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(10px);
+    border-radius: 60px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--primary);
+    transition: transform 0.2s;
+}
+.music-player:hover {
+    transform: scale(1.02);
+}
+
+/* 封面图片 */
+.player-cover {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: 0 0 0 2px var(--primary);
+    /* 旋转动画（可选，如果不想要可以删除下面两行） */
+    animation: spinCover 12s infinite linear;
+}
+
+/* 旋转动画 */
+@keyframes spinCover {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* 鼠标悬停时封面减速（可选） */
+.music-player:hover .player-cover {
+    animation-duration: 20s;
+}
+
+/* 播放器信息 */
+.player-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 100px;
+}
+.song-name {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--accent);
+    white-space: nowrap;
+}
+.artist-name {
+    font-size: 0.65rem;
+    color: #ccc;
+}
+
+/* 控制按钮 */
+.player-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.control-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.2s;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.control-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--primary);
+}
+.volume-slider {
+    width: 60px;
+    height: 3px;
+    -webkit-appearance: none;
+    background: rgba(255,255,255,0.3);
+    border-radius: 3px;
+    outline: none;
+}
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--primary);
+    cursor: pointer;
+}
+
+@media (max-width: 650px) {
+    .music-player {
+        bottom: 10px;
+        right: 10px;
+        padding: 6px 12px;
+    }
+    .player-info {
+        min-width: 70px;
+    }
+    .song-name {
+        font-size: 0.7rem;
+    }
+    .volume-slider {
+        width: 40px;
+    }
+}

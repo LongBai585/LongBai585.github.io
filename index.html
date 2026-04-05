@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Hexo | 二次元幻想乡</title>
+    <!-- 字体 & 图标库 -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- 主题样式 -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- 动态CSS变量注入 -->
+    <style>
+        :root {
+            --primary: #ff6ec7;
+            --secondary: #66ccff;
+            --accent: #ffd700;
+            --bg1: #1a1a2e;
+            --bg2: #16213e;
+            --bg3: #0f3460;
+            --text: #ffffff;
+            --avatar-speed: 8s;
+        }
+    </style>
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+<div class="blog-container">
+    <div class="blog-inner">
+        <!-- ========== profile 区域 ========== -->
+        <div class="profile-section">
+            <div class="avatar-area">
+                <div class="avatar-wrapper">
+                    <img id="profileAvatar" class="rotating-avatar" src="/images/avatar.png" alt="头像">
+                </div>
+                <div class="avatar-actions">
+                    <button id="uploadAvatarBtn" class="upload-btn"><i class="fas fa-camera-retro"></i> 换头像</button>
+                    <button id="resetAvatarBtn" class="upload-btn reset-avatar"><i class="fas fa-undo-alt"></i> 重置</button>
+                </div>
+                <input type="file" id="avatarInput" class="file-input-hidden" accept="image/jpeg,image/png,image/gif,image/webp">
+                <div class="avatar-hint">✨ 头像自动旋转 ✨</div>
+            </div>
+            <div class="blog-info">
+                <div class="blog-date">
+                    <i class="far fa-calendar-alt"></i> 始于 2024
+                </div>
+                <h1 class="blog-title">泷白的博客</h1>
+                <div class="blog-subtitle">
+                    <i class="fas fa-crown"></i> 记录开发故事，探寻开发过程
+                </div>
+                <div class="blog-desc">
+                    <i class="fas fa-pen-fancy"></i> 我是泷白，一个才疏学浅的开发小白
+                </div>
+                <hr class="divider-cute">
+                <div class="signature">
+                    <i class="fas fa-feather-alt"></i> 泷白 · 二次元开发日记
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 时间 + 打字滚动字符区域 ========== -->
+        <div class="time-ticker-section">
+            <div class="time-wrapper">
+                <div class="live-time" id="liveClock"></div>
+            </div>
+            <div class="scroll-area">
+                <div class="scroll-content" id="scrollText"></div>
+            </div>
+        </div>
+
+        <!-- 文章主体内容（静态卡片网格将自动显示） -->
+        <div class="featured-posts">
+    
+        
+            <div class="post-card">
+                <div class="post-date">
+                    <i class="far fa-calendar-alt"></i> 
+                    2026-04-05
+                </div>
+                <div class="post-title">
+                    <a href="/2026/04/05/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%97%A5%E5%BF%97/"></a>
+                </div>
+                <div class="post-excerpt">
+                    
+                        &lt;hr&gt;
+&lt;p&gt;title: 泷白&lt;br&gt;date: 2026-04-05 21:17:07&lt;br&gt;tags: 你好，我是 泷白。 一个喜欢二次元的开发小白，正在努力学习C#和PLC。&lt;/p&gt;
+...
+                    
+                </div>
+                <a href="/2026/04/05/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%97%A5%E5%BF%97/" class="read-more">阅读更多 →</a>
+            </div>
+        
+    
+</div>
+
+
+
+        <!-- ========== footer 区域 ========== -->
+        <footer>
+            <div class="footer-social">
+                
+                    <a href="https://github.com/yourname" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+                
+                
+                    <a href="mailto:your@email.com" target="_blank" rel="noopener noreferrer"><i class="fas fa-envelope"></i></a>
+                
+            </div>
+            <div class="footer-text">
+                <i class="fas fa-music"></i> 夢とコードの狭間で  |  © 泷白 幻想乡博客 | v
+            </div>
+        </footer>
+    </div>
+</div>
+
+<!-- ========== 音乐播放器（浮动控件） ========== -->
+
+<div class="music-player" id="musicPlayer">
+    <div class="player-cover" id="playerCover" style="background-image: url('/images/cover.jpg');"></div>
+    <div class="player-info">
+        <div class="song-name">猫耳开关</div>
+        <div class="artist-name">Hanser</div>
+    </div>
+    <div class="player-controls">
+        <button id="playPauseBtn" class="control-btn"><i class="fas fa-play"></i></button>
+        <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.01" value="0.5">
+        <button id="muteBtn" class="control-btn"><i class="fas fa-volume-up"></i></button>
+    </div>
+    <audio id="bgAudio" src="/music/Hanser - 猫耳开关（Cover miku）.mp3" preload="auto" autoplay></audio>
+</div>
+
+
+<!-- 主题配置暴露给前端 -->
+<script>
+    window.themeConfig = {
+        scrollMessages: ["🌸 二次元世界欢迎你 ~ 今天也要元气满满！","✨ 学习·技术·日常 | 泷白的博客正式开放","🎀 头像可以自定义上传，并且它会自己旋转哦！","🍬 滚动消息条 | 实时时间在头顶，陪伴你的每一刻","📖 最近更新: 博客主题升级为二次元幻想风~","⭐ 梦想成为技术大佬，同时热爱动漫与生活","💬 『我是泷白，一个才疏学浅的开发小白』 一起进步吧！","🎵 落樱纷飞，代码如诗，欢迎友链交换~"],
+        defaultAvatar: "/images/avatar.png",
+        avatarSpeed: "8s",
+        specialVersion: "",
+        githubUrl: "https://github.com/yourname",
+        emailUrl: "mailto:your@email.com",
+        author: "泷白",
+        music: {"enable":true,"audio_url":"/music/Hanser - 猫耳开关（Cover miku）.mp3","cover_image":"/images/cover.jpg","song_name":"猫耳开关","artist":"Hanser","autoplay":true}
+    };
+</script>
+<script src="/js/main.js"></script>
+</body>
+</html>
