@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Hexo | 古风·二次元</title>
+    <!-- 古风字体：思源宋体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        :root {
+            --primary: #b87c4f;
+            --secondary: #7e5a3c;
+            --accent: #d4af8c;
+            --bg1: #f9f3e8;
+            --bg2: #efe2cf;
+            --bg3: #e3d0b5;
+            --text: #3e2a21;
+            --avatar-speed: 8s;
+        }
+    </style>
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+<div class="blog-container">
+    <div class="blog-inner">
+        <!-- 头部个人信息 + 背景上传按钮 -->
+        <div class="profile-section">
+            <div class="avatar-area">
+                <div class="avatar-wrapper">
+                    <img id="profileAvatar" class="rotating-avatar" src="/images/avatar.png" alt="头像">
+                </div>
+                <div class="avatar-actions">
+                    <button id="uploadAvatarBtn" class="upload-btn"><i class="fas fa-camera-retro"></i> 换头像</button>
+                    <button id="resetAvatarBtn" class="upload-btn reset-avatar"><i class="fas fa-undo-alt"></i> 重置</button>
+                    <button id="uploadBgBtn" class="upload-btn bg-btn"><i class="fas fa-image"></i> 换背景</button>
+                </div>
+                <input type="file" id="avatarInput" class="file-input-hidden" accept="image/*">
+                <input type="file" id="bgInput" class="file-input-hidden" accept="image/*">
+                <div class="avatar-hint">✨ 头像旋转 | 点击换背景 ✨</div>
+            </div>
+            <div class="blog-info">
+                <div class="blog-date"><i class="far fa-calendar-alt"></i> 始于 2024</div>
+                <h1 class="blog-title">泷白的博客</h1>
+                <div class="blog-subtitle"><i class="fas fa-feather-alt"></i> 记录开发故事，探寻开发过程</div>
+                <div class="blog-desc"><i class="fas fa-pen-fancy"></i> 我是泷白，一个才疏学浅的开发小白</div>
+                <hr class="divider-cute">
+                <div class="signature"><i class="fas fa-leaf"></i> 水墨·幻境</div>
+            </div>
+        </div>
+
+        <!-- 时间 + 打字机公告 -->
+        <div class="time-ticker-section">
+            <div class="time-wrapper"><div class="live-time" id="liveClock"></div></div>
+            <div class="scroll-area">
+                <div class="scroll-content" id="scrollText"></div>
+            </div>
+        </div>
+
+        <!-- 文章主体内容 -->
+        <article class="post-full">
+    <header class="post-header">
+        <h1 class="post-title-full">洛克王国世界 · 工具攻略收集站</h1>
+        <div class="post-meta">
+            <i class="far fa-calendar-alt"></i> 2026-04-11
+            
+                &nbsp;|&nbsp;
+                <i class="fas fa-tag"></i>
+                
+                    <span class="tag">洛克王国</span>
+                
+                    <span class="tag">游戏攻略</span>
+                
+                    <span class="tag">工具集</span>
+                
+            
+        </div>
+    </header>
+    <div class="post-content">
+        <p>欢迎来到 <strong>洛克王国世界</strong> 的非官方工具攻略站！这里汇集了实用的游戏工具、最新攻略和社区交流平台，助你轻松成为王国大师。</p>
+<div class="rock-kingdom-tools">
+    <div class="tools-header">
+        <img src="https://cdn.pixabay.com/photo/2016/03/31/19/58/avatar-1295429_640.png" alt="洛克王国吉祥物" class="tools-icon">
+        <h2>✨ 洛克王国 · 旅行者工具箱 ✨</h2>
+        <p>宠物养成 | 对战模拟 | 资源地图 | 活动攻略</p>
+    </div>
+
+<pre><code>&lt;div class=&quot;tools-grid&quot;&gt;
+    &lt;!-- 世界地图 --&gt;
+    &lt;div class=&quot;tool-card&quot; data-tool=&quot;map&quot;&gt;
+        &lt;div class=&quot;tool-icon&quot;&gt;🗺️&lt;/div&gt;
+        &lt;h3&gt;世界地图 · 资源查询&lt;/h3&gt;
+        &lt;p&gt;全地图资源点标记 | 精灵刷新位置 | 隐藏道具&lt;/p&gt;
+        &lt;button class=&quot;tool-btn&quot; onclick=&quot;showToolModal(&#39;map&#39;)&quot;&gt;探索地图&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 高阶攻略 --&gt;
+    &lt;div class=&quot;tool-card&quot; data-tool=&quot;strategy&quot;&gt;
+        &lt;div class=&quot;tool-icon&quot;&gt;📚&lt;/div&gt;
+        &lt;h3&gt;高阶攻略大全&lt;/h3&gt;
+        &lt;p&gt;体系队搭配 | 神宠养成 | BOSS逃课 | PVP天梯&lt;/p&gt;
+        &lt;button class=&quot;tool-btn&quot; onclick=&quot;showToolModal(&#39;strategy&#39;)&quot;&gt;查看攻略&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 精灵图鉴 --&gt;
+    &lt;div class=&quot;tool-card&quot; data-tool=&quot;pokedex&quot;&gt;
+        &lt;div class=&quot;tool-icon&quot;&gt;🐉&lt;/div&gt;
+        &lt;h3&gt;精灵图鉴 · 图鉴工具&lt;/h3&gt;
+        &lt;p&gt;全种族值/技能表 | 进化路线 | 培养方案&lt;/p&gt;
+        &lt;button class=&quot;tool-btn&quot; onclick=&quot;showToolModal(&#39;pokedex&#39;)&quot;&gt;查询精灵&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 活动日历 --&gt;
+    &lt;div class=&quot;tool-card&quot; data-tool=&quot;calendar&quot;&gt;
+        &lt;div class=&quot;tool-icon&quot;&gt;📅&lt;/div&gt;
+        &lt;h3&gt;活动日历 &amp; 赛季&lt;/h3&gt;
+        &lt;p&gt;S1赛季暗夜拾光 | 每周活动 | 版本更新&lt;/p&gt;
+        &lt;button class=&quot;tool-btn&quot; onclick=&quot;showToolModal(&#39;calendar&#39;)&quot;&gt;查看活动&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 玩家社区 --&gt;
+    &lt;div class=&quot;tool-card&quot; data-tool=&quot;community&quot;&gt;
+        &lt;div class=&quot;tool-icon&quot;&gt;💬&lt;/div&gt;
+        &lt;h3&gt;玩家社区 · 论坛&lt;/h3&gt;
+        &lt;p&gt;洛克王国官方论坛 | 玩家交流 | 配队讨论&lt;/p&gt;
+        &lt;button class=&quot;tool-btn&quot; onclick=&quot;showToolModal(&#39;community&#39;)&quot;&gt;进入社区&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 功能辅助 --&gt;
+    &lt;div class=&quot;tool-card&quot; data-tool=&quot;assistant&quot;&gt;
+        &lt;div class=&quot;tool-icon&quot;&gt;⚙️&lt;/div&gt;
+        &lt;h3&gt;功能辅助 · 开荒神器&lt;/h3&gt;
+        &lt;p&gt;洛克广场 | 互动地图 | 全攻略库&lt;/p&gt;
+        &lt;button class=&quot;tool-btn&quot; onclick=&quot;showToolModal(&#39;assistant&#39;)&quot;&gt;了解辅助&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 技能伤害计算器 --&gt;
+    &lt;div class=&quot;tool-card&quot; data-tool=&quot;calculator&quot;&gt;
+        &lt;div class=&quot;tool-icon&quot;&gt;⚔️&lt;/div&gt;
+        &lt;h3&gt;技能伤害计算器&lt;/h3&gt;
+        &lt;p&gt;模拟对战 | 属性克制计算 | 伤害公式&lt;/p&gt;
+        &lt;button class=&quot;tool-btn&quot; onclick=&quot;showToolModal(&#39;calculator&#39;)&quot;&gt;模拟对战&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 更多工具 --&gt;
+    &lt;div class=&quot;tool-card&quot; data-tool=&quot;more&quot;&gt;
+        &lt;div class=&quot;tool-icon&quot;&gt;🛠️&lt;/div&gt;
+        &lt;h3&gt;更多实用工具&lt;/h3&gt;
+        &lt;p&gt;个体值计算 | 努力值训练 | 技能遗传模拟&lt;/p&gt;
+        &lt;button class=&quot;tool-btn&quot; onclick=&quot;showToolModal(&#39;more&#39;)&quot;&gt;敬请期待&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- 模态框（展示具体工具内容） --&gt;
+&lt;div id=&quot;toolModal&quot; class=&quot;tool-modal&quot;&gt;
+    &lt;div class=&quot;tool-modal-content&quot;&gt;
+        &lt;span class=&quot;close-modal&quot;&gt;&amp;times;&lt;/span&gt;
+        &lt;div id=&quot;modalContent&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+</div>
+
+<style>
+/* 古风二次元风格适配 */
+.rock-kingdom-tools {
+    margin: 2rem 0;
+    padding: 1rem;
+    background: rgba(250, 245, 235, 0.7);
+    border-radius: 48px;
+    backdrop-filter: blur(4px);
+    border: 1px solid #e2c7a3;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+
+.tools-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.tools-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #e6d5bc;
+    padding: 10px;
+    margin-bottom: 1rem;
+}
+.tools-header h2 {
+    font-size: 1.8rem;
+    background: linear-gradient(135deg, #b87c4f, #d4a373);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    margin: 0.5rem 0;
+}
+.tools-header p {
+    color: #7e5a3c;
+    font-style: italic;
+}
+
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.tool-card {
+    background: rgba(255, 250, 240, 0.9);
+    border-radius: 32px;
+    padding: 1.2rem;
+    text-align: center;
+    transition: 0.25s;
+    border: 1px solid #e0c8a6;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+.tool-card:hover {
+    transform: translateY(-6px);
+    background: #fff8ef;
+    border-color: #b87c4f;
+}
+.tool-icon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+.tool-card h3 {
+    color: #9b6a3c;
+    margin: 0.5rem 0;
+}
+.tool-card p {
+    font-size: 0.85rem;
+    color: #6b4c2c;
+    margin-bottom: 1rem;
+}
+.tool-btn {
+    background: #b87c4f;
+    border: none;
+    color: #fef0e0;
+    padding: 8px 16px;
+    border-radius: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    font-family: inherit;
+}
+.tool-btn:hover {
+    background: #9b5e3a;
+    transform: scale(0.96);
+}
+
+/* 模态框样式 */
+.tool-modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+}
+.tool-modal-content {
+    background: #fef8ef;
+    border-radius: 48px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 2rem;
+    position: relative;
+    border: 1px solid #dbbc8a;
+    box-shadow: 0 20px 35px rgba(0,0,0,0.2);
+    color: #3e2a21;
+}
+.close-modal {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #b87c4f;
+}
+.close-modal:hover {
+    color: #7e5a3c;
+}
+#modalContent {
+    margin-top: 1rem;
+}
+.tool-modal-content h3 {
+    color: #b87c4f;
+    margin-bottom: 1rem;
+}
+.tool-modal-content ul {
+    padding-left: 1.5rem;
+}
+.tool-modal-content li {
+    margin: 0.5rem 0;
+}
+.tool-modal-content a {
+    color: #b87c4f;
+    text-decoration: none;
+}
+.tool-modal-content a:hover {
+    text-decoration: underline;
+}
+</style>
+
+<script>
+// 工具模态框内容（整合所有资源）
+const toolData = {
+    map: {
+        title: "🗺️ 世界地图工具",
+        content: `
+            <p>以下地图工具可以帮助你快速定位精灵、资源和任务点：</p>
+            <ul>
+                <li><strong><a href="https://map.17173.com/rocom/maps/shijie" target="_blank">17173 洛克王国世界互动地图</a></strong> — 全地图资源点标记，支持搜索标注点，记录探索进度，标记已收集资源[reference:13]。</li>
+                <li><strong><a href="https://m.yoyou.com/shouji/luokewangguoshi_279851.html" target="_blank">洛克王国世界地图资源查询器</a></strong> — 包含全精灵数据、属性、技能、种族值、进化路径和捕捉地点，支持关键词搜索和排序，可标记已拥有精灵，生成个性化收藏指南[reference:14]。</li>
+                <li><strong>功能辅助中的互动地图</strong> — 标记主线任务关键节点、魔法石采集点、稀有材料刷新区域及世界Boss刷新倒计时节点[reference:15]。</li>
+            </ul>
+            <p>💡 小提示：地图工具无需登录，即开即用，支持搜索"炼金台"等功能建筑快速导航[reference:16]。</p>
+        `
+    },
+    strategy: {
+        title: "📚 高阶攻略大全",
+        content: `
+            <p>以下攻略站和WIKI提供最全面的游戏指南：</p>
+            <ul>
+                <li><strong><a href="https://www.epic7.epic.gamekee.com/rocom/" target="_blank">GameKee WIKI · 洛克王国世界</a></strong> — 精灵图鉴、道具图鉴、技能图鉴、副本图鉴，社区用户发帖互动[reference:17]。</li>
+                <li><strong><a href="https://a.4399.cn/gl/52527979_357330.html" target="_blank">4399 · 洛克王国世界高阶攻略大全</a></strong> — 八大体系队搭配详解（T0风起队到逃课流）、神宠深度培养指南、BOSS逃课与资源规划、PVP天梯思路[reference:18]。</li>
+                <li><strong><a href="https://baike.baidu.com/item/洛克王国游戏攻略站/3669892" target="_blank">百度百科 · 洛克王国游戏攻略站</a></strong> — 综合性攻略平台，含新手入门、角色技能解析、实战策略及辅助工具说明[reference:19]。</li>
+            </ul>
+            <p>💡 体系队推荐：当前版本T0风起队（翼龙、皇家狮鹫、厉毒修萝、寒音蛇、獠牙猪、蹦蹦花），开局工具人开印记+撒钉子磨血，中场上推队宠拿强化后清场[reference:20]。</p>
+        `
+    },
+    pokedex: {
+        title: "🐉 精灵图鉴 · 图鉴工具",
+        content: `
+            <p>查询全精灵数据，规划培养路线：</p>
+            <ul>
+                <li><strong><a href="https://m.diyiyou.com/soft/22574.html" target="_blank">洛克王国世界图鉴工具</a></strong> — 收录全系列宠物数据，一键查属性、进化路线与获取方式，附技能效果、性格推荐及培养方案，内置阵容搭配库[reference:21]。</li>
+                <li><strong><a href="https://m.wandoujia.com/strategy/4568547009214379331.html" target="_blank">豌豆荚 · 全精灵图鉴汇总</a></strong> — 喵喵(346种族值)、丢丢(265)、蹦蹦(337)、伊贝二(446)、草头鸭(458)等全精灵种族值数据[reference:22]。</li>
+                <li><strong><a href="https://www.epic7.epic.gamekee.com/rocom/" target="_blank">GameKee 精灵图鉴</a></strong> — 按属性分类（草/火/水/光/地/冰/龙/电/毒/虫等），含I阶、II阶、地区形态、首领形态、终极形态[reference:23]。</li>
+            </ul>
+            <p>💡 图鉴工具支持实时互动，查询宠物属性特点，帮助制定战斗策略[reference:24]。</p>
+        `
+    },
+    calendar: {
+        title: "📅 活动日历 & 赛季",
+        content: `
+            <p>最新活动与赛季资讯：</p>
+            <ul>
+                <li><strong><a href="https://m.wandoujia.com/strategy/4568547009214379331.html" target="_blank">S1赛季「暗夜拾光」详解</a></strong> — 2026年3月26日至5月20日，传说精灵"龙息帕尔"免费获取，新玩法"奇遇噩梦枷锁"[reference:25]。</li>
+                <li><strong><a href="https://www.ldmnq.com/6190/zixun/1048806.html" target="_blank">3-5月活动日历一览</a></strong> — 每周活动安排、版本更新预告、限时福利汇总[reference:26]。</li>
+                <li><strong><a href="https://news.qq.com/rain/a/20260411A03KNM00" target="_blank">每日必做清单</a></strong> — 魔兽入侵活动（周一至五晚7-9点、周末下午1-3点），周末专属"星光对决"PVP双倍胜场奖励[reference:27]。</li>
+            </ul>
+            <p>💡 赛季通行证提供"月光"与"星光"双主题选择，赛季货币"许愿星"可在"箱中研究室"兑换时装、玩具、家具等[reference:28]。</p>
+        `
+    },
+    community: {
+        title: "💬 玩家社区 · 论坛",
+        content: `
+            <p>加入玩家社区，交流配队、分享攻略：</p>
+            <ul>
+                <li><strong><a href="https://17roco.gamebbs.qq.com/" target="_blank">洛克王国官方论坛</a></strong> — 页游官方社区，版主团发布公告，玩家讨论区[reference:29]。</li>
+                <li><strong><a href="https://baike.baidu.com/item/洛克时空/21649568" target="_blank">洛克时空论坛</a></strong> — 儿童游戏经验交流中心，含娱乐区、动漫区，发布游戏辅助和攻略[reference:30]。</li>
+                <li><strong><a href="https://tieba.baidu.com/f?kw=洛克王国" target="_blank">洛克王国吧</a></strong> — 百度贴吧，18万会员，周末和放假期间人气较高[reference:31]。</li>
+            </ul>
+            <p>💡 官方论坛版规强调文明交流，禁止发布外挂、代练等内容，请遵守社区规则[reference:32]。</p>
+        `
+    },
+    assistant: {
+        title: "⚙️ 功能辅助 · 开荒神器",
+        content: `
+            <p>官方与第三方辅助工具，提升开荒效率：</p>
+            <ul>
+                <li><strong><a href="https://m.wandoujia.com/apps/8100514/1818313180070867499.html" target="_blank">洛克广场</a></strong> — 移动端首选，更新最新资讯、游戏福利、玩家攻略，支持地图标记功能[reference:33]。</li>
+                <li><strong>洛克王国世界互动地图</strong> — 内测玩家验证，精细地图交互，可标注精灵位置、主线任务关键节点、魔法石采集点、稀有材料刷新区域、世界Boss刷新倒计时[reference:34][reference:35]。</li>
+                <li><strong>全能攻略库</strong> — 包含地图探索标记信息、精灵升级经验表、培养攻略、后期资源获取等全方位参考[reference:36]。</li>
+            </ul>
+            <p>💡 合理利用辅助工具，可以在开荒期彻底摸清游戏玩法，避免走弯路[reference:37]。</p>
+        `
+    },
+    calculator: {
+        title: "⚔️ 技能伤害计算器",
+        content: `
+            <p>伤害计算公式与模拟器参考：</p>
+            <div style="background:#f0e6d8; padding:1rem; border-radius:20px; margin-bottom:1rem;">
+                <label>技能威力: <input type="number" id="power" value="80" style="width:80px;"></label><br>
+                <label>攻击方攻击力: <input type="number" id="attack" value="200" style="width:100px;"></label><br>
+                <label>防御方防御力: <input type="number" id="defense" value="150" style="width:100px;"></label><br>
+                <label>等级修正 (0.8~1.2): <input type="number" id="random" step="0.01" value="1.0" style="width:80px;"></label><br>
+                <button id="calcDamage" style="margin-top:10px; background:#b87c4f; color:white; border:none; padding:5px 12px; border-radius:20px; cursor:pointer;">计算伤害</button>
+                <p id="damageResult">预计伤害: —</p>
+            </div>
+            <p><strong>伤害计算公式参考</strong>：伤害值 = [ (攻击方等级 × 0.4 + 2) × 技能威力 × 攻击方攻击(或魔攻) ÷ 防御方防御(或魔防) ÷ 50 + 2 ] × 克制关系 × (0.8~1随机数)[reference:38][reference:39]</p>
+            <p>💡 能力值计算公式：HP = (种族值×2+天赋)×等级÷100+等级+10；非HP = [(种族值×2+天赋)×等级÷100+5]×性格修正[reference:40]。</p>
+            <script>
+                document.getElementById('calcDamage')?.addEventListener('click', function() {
+                    let power = +document.getElementById('power').value;
+                    let attack = +document.getElementById('attack').value;
+                    let defense = +document.getElementById('defense').value;
+                    let random = +document.getElementById('random').value;
+                    let level = 50;
+                    let damage = Math.floor(((level * 0.4 + 2) * power * attack / defense / 50 + 2) * random);
+                    document.getElementById('damageResult').innerText = '预计伤害: ' + Math.max(1, damage);
+                });
+            </script>
+<pre><code>    `
+},
+more: {
+    title: &quot;🛠️ 更多工具即将上线&quot;,
+    content: `
+        &lt;p&gt;我们正在开发以下工具，敬请期待：&lt;/p&gt;
+        &lt;ul&gt;
+            &lt;li&gt;&lt;strong&gt;个体值计算器&lt;/strong&gt; — 在线评估精灵算力&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;努力值训练路线规划器&lt;/strong&gt; — 最优刷怪路线推荐&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;技能遗传模拟器&lt;/strong&gt; — 精灵技能遗传搭配模拟&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;阵容搭配推荐系统&lt;/strong&gt; — 根据已有精灵推荐最优PVP/PVE阵容&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;p&gt;💡 如果您有急需的工具，欢迎通过侧边栏邮箱联系站长～&lt;/p&gt;
+    `
+}
+</code></pre>
+<p>};</p>
+<p>function showToolModal(toolId) {<br>    const modal &#x3D; document.getElementById(&#39;toolModal&#39;);<br>    const modalContentDiv &#x3D; document.getElementById(&#39;modalContent&#39;);<br>    const data &#x3D; toolData[toolId];<br>    if (!data) return;<br>    modalContentDiv.innerHTML &#x3D; <code>&lt;h3&gt;${data.title}&lt;/h3&gt;${data.content}</code>;<br>    modal.style.display &#x3D; &#39;flex&#39;;<br>}</p>
+<p>&#x2F;&#x2F; 关闭模态框<br>document.querySelector(&#39;.close-modal&#39;).onclick &#x3D; function() {<br>    document.getElementById(&#39;toolModal&#39;).style.display &#x3D; &#39;none&#39;;<br>};<br>window.onclick &#x3D; function(event) {<br>    const modal &#x3D; document.getElementById(&#39;toolModal&#39;);<br>    if (event.target &#x3D;&#x3D;&#x3D; modal) modal.style.display &#x3D; &#39;none&#39;;<br>};<br></script></p>
+<hr>
+<p><strong>使用说明</strong>：点击任意工具卡片上的按钮，即可查看对应的攻略&#x2F;工具内容。所有外链均已在模态框中列出，点击即可跳转。本站将持续更新更多实用功能，欢迎收藏！</p>
+
+    </div>
+    <footer class="post-footer">
+        <div class="post-copyright">✨ 原创文章，转载请注明出处 ~</div>
+    </footer>
+</article>
+
+        <!-- 页脚 -->
+        <footer>
+            <div class="footer-social">
+                
+                    <a href="https://github.com/LongBai585" target="_blank"><i class="fab fa-github"></i></a>
+                
+                
+                    <a href="mailto:ym.yxzs.yllb.@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
+                
+            </div>
+            <div class="footer-text">
+                <i class="fas fa-music"></i> 夢とコードの狭間で  |  © 泷白 水墨幻境 | v440
+            </div>
+        </footer>
+    </div>
+</div>
+
+<!-- 音乐播放器 -->
+
+<div class="music-player" id="musicPlayer">
+    <div class="player-cover" style="background-image: url('/images/cover.jpg');"></div>
+    <div class="player-info">
+        <div class="song-name">猫耳开关</div>
+        <div class="artist-name">Hanser</div>
+    </div>
+    <div class="player-controls">
+        <button id="playPauseBtn" class="control-btn"><i class="fas fa-play"></i></button>
+        <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.01" value="0.5">
+        <button id="muteBtn" class="control-btn"><i class="fas fa-volume-up"></i></button>
+    </div>
+    <audio id="bgAudio" src="/music/Hanser - 猫耳开关（Cover miku）.mp3" preload="auto" ></audio>
+</div>
+
+
+<script>
+    window.themeConfig = {
+        defaultAvatar: "/images/avatar.png",
+        avatarSpeed: "8s",
+        music: {"enable":true,"audio_url":"/music/Hanser - 猫耳开关（Cover miku）.mp3","cover_image":"/images/cover.jpg","song_name":"猫耳开关","artist":"Hanser","autoplay":false}
+    };
+</script>
+<script src="/js/main.js"></script>
+</body>
+</html>
