@@ -5,7 +5,6 @@
     box-sizing: border-box;
 }
 
-/* 动态背景（支持用户上传） */
 body {
     font-family: 'Noto Serif SC', 'Quicksand', 'Segoe UI', serif;
     background: #efe2cf;
@@ -19,7 +18,6 @@ body {
     color: var(--text);
 }
 
-/* 半透明水墨遮罩 */
 body::before {
     content: "";
     position: fixed;
@@ -32,7 +30,6 @@ body::before {
     z-index: 0;
 }
 
-/* 古风装饰 */
 body::after {
     content: "❀  ✿  ❁  🎋";
     position: fixed;
@@ -47,14 +44,13 @@ body::after {
     white-space: pre;
 }
 
-/* 主容器 */
 .blog-container {
     max-width: 1000px;
     margin: 0 auto;
     background: rgba(250, 245, 235, 0.9);
     backdrop-filter: blur(4px);
-    border-radius: 48px 48px 56px 56px;
-    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.15), inset 0 1px 2px rgba(255,255,210,0.6);
+    border-radius: 48px;
+    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.15);
     overflow: hidden;
     position: relative;
     z-index: 2;
@@ -65,162 +61,112 @@ body::after {
     padding: 2rem;
 }
 
-/* 个人资料区 */
+/* 头部区域 */
 .profile-section {
     display: flex;
     flex-wrap: wrap;
-    gap: 2rem;
+    gap: 1.5rem;
     align-items: center;
     margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px dashed #c6a87b;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e2d4c0;
 }
-
+.avatar-area {
+    flex-shrink: 0;
+}
 .avatar-wrapper {
-    width: 130px;
-    height: 130px;
-    margin: 0 auto;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
-    box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+    overflow: hidden;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
 }
-
 .rotating-avatar {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 50%;
-    border: 3px solid #e6ccaa;
-    box-shadow: 0 0 0 3px #b87c4f;
     animation: spinAvatar var(--avatar-speed, 10s) infinite linear;
 }
-
 @keyframes spinAvatar {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
-
-.upload-btn {
-    background: #b87c4f;
-    border: none;
-    color: #fef0e0;
-    font-size: 0.7rem;
-    font-weight: 500;
-    padding: 5px 12px;
-    border-radius: 30px;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    cursor: pointer;
-    transition: 0.2s;
-    font-family: inherit;
+.blog-info {
+    flex: 1;
 }
-.upload-btn:hover {
-    background: #9b5e3a;
-    transform: translateY(-2px);
+.blog-title {
+    font-size: 2rem;
+    font-weight: 500;
+    color: #6b4c2c;
+    margin-bottom: 0.3rem;
+}
+.blog-subtitle {
+    font-size: 0.95rem;
+    color: #9b7a5a;
+    font-style: italic;
+}
+.blog-desc {
+    font-size: 0.85rem;
+    color: #b08c64;
+    margin: 0.3rem 0;
+}
+.divider-cute {
+    width: 50px;
+    height: 1px;
+    background: #d4bea0;
+    border: none;
+    margin: 0.6rem 0;
+}
+.signature {
+    font-size: 0.75rem;
+    color: #b89a72;
 }
 .bg-btn {
     background: #6f8f6f;
+    border: none;
+    color: #fef0e0;
+    font-size: 0.7rem;
+    padding: 5px 12px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.2s;
+    margin-top: 6px;
 }
 .bg-btn:hover {
     background: #557355;
 }
-
-.avatar-actions {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-    margin-top: 10px;
-    flex-wrap: wrap;
-}
-.avatar-hint {
-    font-size: 0.65rem;
-    margin-top: 6px;
-    color: #8b694a;
-    font-style: italic;
+.file-input-hidden {
+    display: none;
 }
 
-.blog-info {
-    flex: 1;
-}
-.blog-date {
-    font-size: 0.85rem;
-    background: #e6d5bc;
-    display: inline-block;
-    padding: 0.2rem 1rem;
-    border-radius: 40px;
-    color: #7a5a3a;
-    margin-bottom: 0.6rem;
-}
-.blog-title {
-    font-size: 2.4rem;
-    font-weight: 600;
-    background: linear-gradient(135deg, #b87c4f, #d4a373);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    letter-spacing: 2px;
-}
-.blog-subtitle {
-    font-size: 1.3rem;
-    color: #7e5a3c;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin: 0.5rem 0;
-}
-.blog-desc {
-    background: rgba(200, 170, 130, 0.2);
-    padding: 0.3rem 1rem;
-    border-radius: 30px;
-    display: inline-block;
-}
-.divider-cute {
-    margin: 1rem 0;
-    border: 0;
-    height: 1px;
-    background: linear-gradient(90deg, #d4b48c, #f2e0c0, #d4b48c);
-}
-.signature {
-    font-style: italic;
-    font-size: 0.9rem;
-    color: #9b7a5a;
-}
-
-/* 时间 + 打字机区域 */
+/* 时间 + 打字机 */
 .time-ticker-section {
     background: rgba(235, 220, 195, 0.7);
     border-radius: 60px;
-    padding: 1rem 1.5rem;
-    margin: 1.8rem 0;
-    border: 1px solid #e2caa8;
+    padding: 0.8rem 1.2rem;
+    margin: 1rem 0 1.5rem;
+    text-align: center;
 }
 .time-wrapper {
-    display: flex;
-    justify-content: center;
+    margin-bottom: 8px;
 }
 .live-time {
     background: #fef5e6;
-    padding: 0.3rem 1.2rem;
+    padding: 0.2rem 1rem;
     border-radius: 40px;
     color: #b87c4f;
-    font-weight: 600;
-    margin-bottom: 12px;
-    font-family: monospace;
-    letter-spacing: 1px;
+    font-size: 0.85rem;
+    display: inline-block;
 }
 .scroll-area {
     background: rgba(240, 225, 200, 0.5);
     border-radius: 50px;
-    padding: 0.6rem 1.2rem;
-    text-align: center;
+    padding: 0.4rem 0.8rem;
 }
 .scroll-content {
-    font-size: 1.05rem;
-    font-weight: 500;
-    color: #8b5a2b;
+    font-size: 0.9rem;
+    color: #7a5a3a;
     display: inline-block;
-    white-space: nowrap;
-    overflow: hidden;
     border-right: 2px solid #b87c4f;
     padding-right: 8px;
     animation: blink 0.8s step-end infinite;
@@ -230,67 +176,139 @@ body::after {
     50% { border-color: #b87c4f; }
 }
 
-/* 文章卡片 */
+/* 统计卡片 */
+.stats-card {
+    background: rgba(255, 250, 240, 0.8);
+    border-radius: 24px;
+    padding: 0.6rem 1rem;
+    margin: 0.5rem 0 0.8rem;
+    border: 1px solid #e2d0b8;
+}
+.stats-card h3 {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #6b4c2c;
+    margin-bottom: 0.4rem;
+    border-left: 3px solid #b87c4f;
+    padding-left: 8px;
+}
+.stats-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    list-style: none;
+}
+.stats-list li {
+    font-size: 0.7rem;
+    color: #7e5a3c;
+}
+.stats-list i {
+    width: 18px;
+    color: #b87c4f;
+}
+
+/* 通知栏 */
+.notice-bar {
+    background: rgba(200, 180, 150, 0.3);
+    border-radius: 40px;
+    padding: 0.4rem 1rem;
+    margin: 0.3rem 0 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    color: #8b694a;
+    border: 1px dashed #d4bea0;
+}
+.notice-bar i {
+    color: #b87c4f;
+}
+.notice-text {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 文章卡片网格 */
 .featured-posts {
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.2rem;
 }
 .post-card {
     background: rgba(250, 242, 230, 0.85);
-    border-radius: 32px;
-    padding: 1rem 1.2rem;
-    transition: 0.25s;
+    border-radius: 24px;
+    padding: 0.8rem 1rem;
+    transition: 0.2s;
     border: 1px solid #e0c8a6;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
 }
 .post-card:hover {
-    transform: translateY(-6px);
+    transform: translateY(-4px);
     background: #fff8ef;
     border-color: #b87c4f;
 }
+.post-date {
+    font-size: 0.7rem;
+    color: #b89a72;
+    margin-bottom: 0.3rem;
+}
+.post-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0.2rem 0;
+}
 .post-title a {
-    font-weight: 600;
-    font-size: 1.2rem;
-    color: #9b6a3c;
+    color: #5e3e22;
     text-decoration: none;
 }
-.read-more {
+.read-more-btn {
+    display: inline-block;
+    background: none;
     color: #b87c4f;
-    font-weight: 500;
-}
-.pagination a {
-    background: #e2caa8;
-    color: #6b4c2c;
+    padding: 2px 12px;
     border-radius: 30px;
-    padding: 5px 12px;
+    font-size: 0.7rem;
+    text-decoration: none;
+    border: 1px solid #d4bea0;
+    margin-top: 6px;
+}
+.read-more-btn:hover {
+    background: #b87c4f;
+    color: white;
 }
 
-/* 文章页独立样式 */
+/* 文章页 */
 .post-full {
     background: rgba(250, 242, 230, 0.85);
-    backdrop-filter: blur(4px);
-    border-radius: 48px;
-    padding: 2rem;
+    border-radius: 24px;
+    padding: 1.5rem;
     margin: 1rem 0;
 }
 .post-title-full {
-    font-size: 2rem;
-    color: #7e5a3c;
+    font-size: 1.6rem;
+    color: #5e3e22;
 }
 .post-meta {
-    font-size: 0.8rem;
-    color: #b87c4f;
-    margin-bottom: 1rem;
+    font-size: 0.7rem;
+    color: #b89a72;
+    margin: 0.5rem 0;
 }
 .post-content {
     line-height: 1.7;
-    color: #3e2a21;
+    color: #3e2a1f;
 }
-.post-content img {
-    max-width: 100%;
-    border-radius: 24px;
+.pagination {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+.pagination a {
+    background: #ede0ce;
+    padding: 4px 10px;
+    border-radius: 30px;
+    color: #8b694a;
+    text-decoration: none;
 }
 
 /* 音乐播放器 */
@@ -300,113 +318,108 @@ body::after {
     right: 20px;
     background: rgba(200, 180, 150, 0.9);
     backdrop-filter: blur(8px);
-    border-radius: 60px;
-    padding: 8px 16px;
+    border-radius: 50px;
+    padding: 5px 12px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
     z-index: 1000;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    border: 1px solid #dbbc8a;
-    transition: transform 0.2s;
-}
-.music-player:hover {
-    transform: scale(1.02);
+    border: 1px solid #d4bea0;
 }
 .player-cover {
-    width: 45px;
-    height: 45px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    box-shadow: 0 0 0 2px #f2e0c0;
     animation: spinCover 15s infinite linear;
 }
 @keyframes spinCover {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
-.music-player:hover .player-cover {
-    animation-duration: 20s;
-}
 .player-info {
-    display: flex;
-    flex-direction: column;
-    min-width: 100px;
+    min-width: 70px;
 }
 .song-name {
-    font-size: 0.8rem;
-    font-weight: bold;
+    font-size: 0.7rem;
     color: #5e3e22;
-    white-space: nowrap;
-}
-.artist-name {
-    font-size: 0.65rem;
-    color: #aa8b64;
-}
-.player-controls {
-    display: flex;
-    align-items: center;
-    gap: 8px;
 }
 .control-btn {
     background: none;
     border: none;
-    color: #fdf0dd;
-    font-size: 1rem;
+    color: #5e3e22;
     cursor: pointer;
-    transition: 0.2s;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-.control-btn:hover {
-    background: rgba(0,0,0,0.1);
-    color: #b87c4f;
 }
 .volume-slider {
-    width: 60px;
-    height: 3px;
-    -webkit-appearance: none;
-    background: rgba(0,0,0,0.2);
-    border-radius: 3px;
-    outline: none;
+    width: 50px;
 }
-.volume-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: #b87c4f;
-    cursor: pointer;
-}
-
 footer {
     text-align: center;
     margin-top: 2rem;
     padding-top: 1rem;
     font-size: 0.7rem;
-    border-top: 1px dashed #c6a87b;
-    color: #8f6d48;
+    border-top: 1px solid #e2d4c0;
+    color: #b08c64;
 }
 .footer-social a {
     color: #7e5a3c;
-    font-size: 1.2rem;
-    margin: 0 8px;
+    font-size: 1.1rem;
+    margin: 0 6px;
 }
 .footer-social a:hover {
     color: #b87c4f;
 }
 
+/* 验证模态框 */
+.auth-modal {
+    display: none;
+    position: fixed;
+    z-index: 3000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+}
+.auth-modal-content {
+    background: #fffcf5;
+    border-radius: 28px;
+    padding: 1.2rem;
+    width: 90%;
+    max-width: 300px;
+    text-align: center;
+}
+.close-auth {
+    float: right;
+    font-size: 20px;
+    cursor: pointer;
+}
+.auth-input {
+    width: 100%;
+    padding: 6px 10px;
+    margin: 8px 0;
+    border: 1px solid #e2d0b8;
+    border-radius: 30px;
+}
+.auth-btn {
+    background: #b87c4f;
+    color: white;
+    border: none;
+    padding: 5px 14px;
+    border-radius: 30px;
+    cursor: pointer;
+}
+.auth-message {
+    margin-top: 6px;
+    font-size: 0.7rem;
+    color: #c27e5c;
+}
+
 @media (max-width: 650px) {
-    .blog-inner { padding: 1.5rem; }
+    .blog-inner { padding: 1rem; }
     .profile-section { flex-direction: column; text-align: center; }
-    .blog-title { font-size: 2rem; }
-    .blog-subtitle { font-size: 1.3rem; justify-content: center; }
-    .music-player { bottom: 10px; right: 10px; padding: 6px 12px; }
-    .player-info { min-width: 70px; }
+    .stats-list { justify-content: center; }
+    .featured-posts { grid-template-columns: 1fr; }
 }

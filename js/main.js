@@ -47,85 +47,125 @@ if (typeContainer) {
     typeEffect();
 }
 
-// ========== 头像上传 ==========
+// ========== 头像加载 + 错误处理 ==========
 const avatarImg = document.getElementById('profileAvatar');
-const avatarInput = document.getElementById('avatarInput');
-const uploadBtn = document.getElementById('uploadAvatarBtn');
-const resetBtn = document.getElementById('resetAvatarBtn');
-const SVG_DEFAULT = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23b87c4f'/%3E%3Ccircle cx='35' cy='40' r='5' fill='white'/%3E%3Ccircle cx='65' cy='40' r='5' fill='white'/%3E%3Ccircle cx='35' cy='40' r='2' fill='%23333'/%3E%3Ccircle cx='65' cy='40' r='2' fill='%23333'/%3E%3Cpath d='M40 65 Q50 75 60 65' stroke='%238b3a5e' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E";
-
-function loadStoredAvatar() {
-    const stored = localStorage.getItem('blog_avatar_custom');
-    if (stored) {
-        avatarImg.src = stored;
-    } else {
-        const defaultUrl = window.themeConfig?.defaultAvatar;
-        avatarImg.src = (defaultUrl && defaultUrl !== '/images/default-avatar.svg') ? defaultUrl : SVG_DEFAULT;
-    }
-}
-function saveAvatar(url) {
-    localStorage.setItem('blog_avatar_custom', url);
-    avatarImg.src = url;
-}
-function resetAvatar() {
-    const defaultUrl = window.themeConfig?.defaultAvatar;
-    if (defaultUrl && defaultUrl !== '/images/default-avatar.svg') {
-        saveAvatar(defaultUrl);
-    } else {
-        saveAvatar(SVG_DEFAULT);
-    }
-}
-uploadBtn?.addEventListener('click', () => avatarInput.click());
-resetBtn?.addEventListener('click', resetAvatar);
-avatarInput?.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (file && file.type.startsWith('image/')) {
-        if (file.size > 2 * 1024 * 1024) {
-            alert('图片不能超过2MB');
-            return;
-        }
-        const reader = new FileReader();
-        reader.onload = (ev) => saveAvatar(ev.target.result);
-        reader.readAsDataURL(file);
-    }
-});
-loadStoredAvatar();
-if (avatarImg) {
+if (avatarImg && window.themeConfig.avatarDefault) {
+    const storedAvatar = localStorage.getItem('blog_avatar_custom');
+    const avatarUrl = storedAvatar || window.themeConfig.avatarDefault;
+    avatarImg.src = avatarUrl;
+    // 如果图片加载失败，替换为默认 SVG 头像
+    avatarImg.onerror = function() {
+        this.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23b87c4f'/%3E%3Ccircle cx='35' cy='40' r='5' fill='white'/%3E%3Ccircle cx='65' cy='40' r='5' fill='white'/%3E%3Ccircle cx='35' cy='40' r='2' fill='%23333'/%3E%3Ccircle cx='65' cy='40' r='2' fill='%23333'/%3E%3Cpath d='M40 65 Q50 75 60 65' stroke='%238b3a5e' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E";
+        this.onerror = null;
+    };
+    // 鼠标悬浮减速
     avatarImg.addEventListener('mouseenter', () => avatarImg.style.animationDuration = '20s');
-    avatarImg.addEventListener('mouseleave', () => avatarImg.style.animationDuration = window.themeConfig?.avatarSpeed || '8s');
+    avatarImg.addEventListener('mouseleave', () => avatarImg.style.animationDuration = window.themeConfig.avatarSpeed || '8s');
 }
 
-// ========== 背景图片上传 ==========
+// ========== 统计信息 ==========
+function fetchStats() {
+    const postCards = document.querySelectorAll('.post-card');
+    const postCount = postCards.length;
+    if (postCount > 0) document.getElementById('postCount').innerText = postCount;
+    else document.getElementById('postCount').innerText = '3';
+    document.getElementById('categoryCount').innerText = '2';
+    document.getElementById('tagCount').innerText = '5';
+    const startDate = new Date(2024, 3, 5);
+    const diffDays = Math.floor((Date.now() - startDate) / (1000 * 60 * 60 * 24));
+    document.getElementById('runDays').innerText = diffDays;
+    const lastPostDate = document.querySelector('.post-card:first-child .post-date');
+    if (lastPostDate) document.getElementById('lastUpdate').innerText = lastPostDate.innerText.trim();
+    else document.getElementById('lastUpdate').innerText = '2026-04-11';
+}
+fetchStats();
+
+// ========== 背景上传 + SHA-256 验证（修复版） ==========
 const bgInput = document.getElementById('bgInput');
 const uploadBgBtn = document.getElementById('uploadBgBtn');
-function loadBackground() {
-    const storedBg = localStorage.getItem('blog_background');
-    if (storedBg) {
-        document.body.style.backgroundImage = `url(${storedBg})`;
-    } else {
-        document.body.style.backgroundImage = 'none';
+const authModal = document.getElementById('authModal');
+const closeAuth = document.querySelector('.close-auth');
+const submitAuthBtn = document.getElementById('submitAuthBtn');
+const authEmail = document.getElementById('authEmail');
+const authPassword = document.getElementById('authPassword');
+const authMessage = document.getElementById('authMessage');
+let pendingFile = null;
+
+// 验证函数：输出调试信息
+function verifyCredentials(email, password) {
+    if (!window.themeConfig.authEmailHash || !window.themeConfig.authPasswordHash) {
+        console.warn('未配置验证哈希，跳过验证');
+        return true;
     }
+    // 去除首尾空格
+    const cleanEmail = email.trim();
+    const cleanPwd = password.trim();
+    const emailHash = sha256(cleanEmail);
+    const pwdHash = sha256(cleanPwd);
+    // 控制台输出比对信息（调试用，可删除）
+    console.log('输入邮箱:', cleanEmail, '哈希:', emailHash);
+    console.log('输入密码:', cleanPwd, '哈希:', pwdHash);
+    console.log('预设邮箱哈希:', window.themeConfig.authEmailHash);
+    console.log('预设密码哈希:', window.themeConfig.authPasswordHash);
+    return (emailHash === window.themeConfig.authEmailHash && pwdHash === window.themeConfig.authPasswordHash);
+}
+
+function loadBackground() {
+    const stored = localStorage.getItem('blog_background');
+    if (stored) document.body.style.backgroundImage = `url(${stored})`;
+    else document.body.style.backgroundImage = 'none';
 }
 function saveBackground(url) {
     localStorage.setItem('blog_background', url);
     document.body.style.backgroundImage = `url(${url})`;
 }
+function doUpload(file) {
+    if (!file) return;
+    if (!file.type.startsWith('image/')) { alert('请选择图片文件'); return; }
+    if (file.size > 3 * 1024 * 1024) { alert('图片小于3MB'); return; }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        saveBackground(e.target.result);
+        authModal.style.display = 'none';
+        if (authEmail) authEmail.value = '';
+        if (authPassword) authPassword.value = '';
+        pendingFile = null;
+        alert('背景更换成功！');
+    };
+    reader.readAsDataURL(file);
+}
 uploadBgBtn?.addEventListener('click', () => bgInput.click());
 bgInput?.addEventListener('change', (e) => {
     const file = e.target.files[0];
-    if (file && file.type.startsWith('image/')) {
-        if (file.size > 3 * 1024 * 1024) {
-            alert('背景图片请小于3MB');
-            return;
-        }
-        const reader = new FileReader();
-        reader.onload = (ev) => saveBackground(ev.target.result);
-        reader.readAsDataURL(file);
+    if (!file) return;
+    pendingFile = file;
+    authModal.style.display = 'flex';
+    if (authEmail) authEmail.value = '';
+    if (authPassword) authPassword.value = '';
+    if (authMessage) authMessage.innerText = '';
+});
+submitAuthBtn?.addEventListener('click', () => {
+    const email = authEmail ? authEmail.value : '';
+    const pwd = authPassword ? authPassword.value : '';
+    if (!email || !pwd) {
+        authMessage.innerText = '请输入邮箱和密码';
+        return;
+    }
+    if (verifyCredentials(email, pwd)) {
+        if (pendingFile) doUpload(pendingFile);
+        else authModal.style.display = 'none';
+    } else {
+        authMessage.innerText = '邮箱或密码错误，请重试';
     }
 });
+closeAuth?.addEventListener('click', () => {
+    authModal.style.display = 'none';
+    pendingFile = null;
+});
+window.onclick = (e) => { if (e.target === authModal) { authModal.style.display = 'none'; pendingFile = null; } };
 loadBackground();
 
-// ========== 音乐播放器控制 ==========
+// ========== 音乐播放器 ==========
 if (window.themeConfig?.music?.enable) {
     const audio = document.getElementById('bgAudio');
     const playPauseBtn = document.getElementById('playPauseBtn');
@@ -135,7 +175,7 @@ if (window.themeConfig?.music?.enable) {
     if (audio && playPauseBtn) {
         playPauseBtn.addEventListener('click', () => {
             if (audio.paused) {
-                audio.play().catch(e => console.log('播放被阻止'));
+                audio.play().catch(e => console.log);
                 playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
             } else {
                 audio.pause();
@@ -173,17 +213,7 @@ if (window.themeConfig?.music?.enable) {
                 }
             });
         }
-        if (window.themeConfig.music.autoplay) {
-            audio.play().catch(() => {
-                const enableAutoPlay = () => {
-                    audio.play().then(() => {
-                        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                        document.removeEventListener('click', enableAutoPlay);
-                    }).catch(() => {});
-                };
-                document.addEventListener('click', enableAutoPlay);
-            });
-        }
+        if (window.themeConfig.music.autoplay) audio.play().catch(() => {});
     }
 }
 
@@ -191,7 +221,7 @@ if (window.themeConfig?.music?.enable) {
 const timeDiv = document.getElementById('liveClock');
 if (timeDiv) {
     timeDiv.addEventListener('click', () => {
-        const msgs = ['🎋 竹影', '🌸 樱吹雪', '🍵 一盏茶', '📜 诗笺', '🌙 月下'];
+        const msgs = ['🎋 竹影', '🌸 花见', '🍵 茶香', '📖 静读'];
         const rand = msgs[Math.floor(Math.random() * msgs.length)];
         const original = timeDiv.innerText;
         timeDiv.innerText = `${rand}  ${original.split(' ')[0]}`;

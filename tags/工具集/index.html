@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Hexo | 古风·二次元</title>
-    <!-- 古风字体：思源宋体 -->
+    <title>Hexo | 古风·简素</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/css/style.css">
     <style>
         :root {
-            --primary: #b87c4f;
-            --secondary: #7e5a3c;
-            --accent: #d4af8c;
-            --bg1: #f9f3e8;
-            --bg2: #efe2cf;
-            --bg3: #e3d0b5;
-            --text: #3e2a21;
+            --primary: #8b6b4d;
+            --secondary: #5a3e2b;
+            --accent: #c9aa7b;
+            --bg1: #f8f4ed;
+            --bg2: #f0e8da;
+            --bg3: #e6d9c8;
+            --text: #3a2a1f;
             --avatar-speed: 8s;
         }
     </style>
@@ -24,32 +23,25 @@
 <body>
 <div class="blog-container">
     <div class="blog-inner">
-        <!-- 头部个人信息 + 背景上传按钮 -->
+        <!-- ========== 头部：头像 + 博客信息 ========== -->
         <div class="profile-section">
             <div class="avatar-area">
                 <div class="avatar-wrapper">
                     <img id="profileAvatar" class="rotating-avatar" src="/images/avatar.png" alt="头像">
                 </div>
-                <div class="avatar-actions">
-                    <button id="uploadAvatarBtn" class="upload-btn"><i class="fas fa-camera-retro"></i> 换头像</button>
-                    <button id="resetAvatarBtn" class="upload-btn reset-avatar"><i class="fas fa-undo-alt"></i> 重置</button>
-                    <button id="uploadBgBtn" class="upload-btn bg-btn"><i class="fas fa-image"></i> 换背景</button>
-                </div>
-                <input type="file" id="avatarInput" class="file-input-hidden" accept="image/*">
-                <input type="file" id="bgInput" class="file-input-hidden" accept="image/*">
-                <div class="avatar-hint">✨ 头像旋转 | 点击换背景 ✨</div>
             </div>
             <div class="blog-info">
-                <div class="blog-date"><i class="far fa-calendar-alt"></i> 始于 2024</div>
-                <h1 class="blog-title">泷白的博客</h1>
-                <div class="blog-subtitle"><i class="fas fa-feather-alt"></i> 记录开发故事，探寻开发过程</div>
-                <div class="blog-desc"><i class="fas fa-pen-fancy"></i> 我是泷白，一个才疏学浅的开发小白</div>
+                <h1 class="blog-title">カンタルの部屋</h1>
+                <div class="blog-subtitle">特別なことばかりで、君がいる十分です。</div>
+                <div class="blog-desc">记录开发故事，探寻开发过程</div>
                 <hr class="divider-cute">
-                <div class="signature"><i class="fas fa-leaf"></i> 水墨·幻境</div>
+                <div class="signature">✎ 一期一会，步履不停</div>
+                <button id="uploadBgBtn" class="bg-btn"><i class="fas fa-image"></i> 换背景</button>
+                <input type="file" id="bgInput" class="file-input-hidden" accept="image/*">
             </div>
         </div>
 
-        <!-- 时间 + 打字机公告 -->
+        <!-- 时间 + 打字机 -->
         <div class="time-ticker-section">
             <div class="time-wrapper"><div class="live-time" id="liveClock"></div></div>
             <div class="scroll-area">
@@ -57,10 +49,29 @@
             </div>
         </div>
 
-        <!-- 文章主体内容 -->
+        <!-- 统计卡片 -->
+        <div class="stats-card">
+            <h3><i class="fas fa-chart-simple"></i> サイト統計</h3>
+            <ul class="stats-list">
+                <li><i class="fas fa-file-alt"></i> 記事数：<span id="postCount">0</span></li>
+                <li><i class="fas fa-folder"></i> カテゴリー数：<span id="categoryCount">0</span></li>
+                <li><i class="fas fa-tags"></i> タグ数：<span id="tagCount">0</span></li>
+                <li><i class="fas fa-calendar-day"></i> 運用日数：<span id="runDays">0</span> 日</li>
+                <li><i class="fas fa-sync-alt"></i> 最終更新：<span id="lastUpdate">—</span></li>
+            </ul>
+        </div>
+
+        <!-- 通知栏 -->
+        <div class="notice-bar">
+            <i class="fas fa-bell"></i>
+            <span class="notice-text">✨ 博客全新改版 | 背景可自定义 | 欢迎留言 ✨</span>
+        </div>
+
+        <!-- 文章主体 -->
         <div class="featured-posts">
     
         
+            
             <div class="post-card">
                 <div class="post-date">
                     <i class="far fa-calendar-alt"></i> 
@@ -69,14 +80,12 @@
                 <div class="post-title">
                     <a href="/2026/04/11/%E6%B4%9B%E5%85%8B%E7%8E%8B%E5%9B%BD%E4%B8%96%E7%95%8C%E5%B7%A5%E5%85%B7%E6%94%BB%E7%95%A5%E6%94%B6%E9%9B%86%E7%AB%99/">洛克王国世界 · 工具攻略收集站</a>
                 </div>
-                <div class="post-excerpt">
-                    
-                        &lt;p&gt;欢迎来到 &lt;strong&gt;洛克王国世界&lt;/strong&gt; 的非官方工具攻略站！这里汇集了实用的游戏工具、最新攻略和社区交流平台，助你轻松成为王国大师。&lt;/p&gt;
-&lt;div class=&#34;rock-kingdom-tools&#34;&gt;
-    ...
-                    
+                <!-- 不显示文章摘要，只显示按钮 -->
+                <div class="post-footer">
+                    <a href="/2026/04/11/%E6%B4%9B%E5%85%8B%E7%8E%8B%E5%9B%BD%E4%B8%96%E7%95%8C%E5%B7%A5%E5%85%B7%E6%94%BB%E7%95%A5%E6%94%B6%E9%9B%86%E7%AB%99/" class="read-more-btn">
+                        <i class="fas fa-gamepad"></i> 进入攻略站
+                    </a>
                 </div>
-                <a href="/2026/04/11/%E6%B4%9B%E5%85%8B%E7%8E%8B%E5%9B%BD%E4%B8%96%E7%95%8C%E5%B7%A5%E5%85%B7%E6%94%BB%E7%95%A5%E6%94%B6%E9%9B%86%E7%AB%99/" class="read-more">阅读更多 →</a>
             </div>
         
     
@@ -95,9 +104,22 @@
                 
             </div>
             <div class="footer-text">
-                <i class="fas fa-music"></i> 夢とコードの狭間で  |  © 泷白 水墨幻境 | v440
+                <i class="fas fa-music"></i> 夢とコードの狭間で  |  © 泷白 简素之境 | v440
             </div>
         </footer>
+    </div>
+</div>
+
+<!-- 验证模态框 -->
+<div id="authModal" class="auth-modal">
+    <div class="auth-modal-content">
+        <span class="close-auth">&times;</span>
+        <h3><i class="fas fa-lock"></i> 身份验证</h3>
+        <p>请输入您的邮箱和密码以更换背景</p>
+        <input type="email" id="authEmail" placeholder="邮箱" class="auth-input">
+        <input type="password" id="authPassword" placeholder="密码" class="auth-input">
+        <button id="submitAuthBtn" class="auth-btn">验证并更换</button>
+        <div id="authMessage" class="auth-message"></div>
     </div>
 </div>
 
@@ -118,11 +140,14 @@
 </div>
 
 
+<script src="https://cdn.jsdelivr.net/npm/js-sha256@0.9.0/build/sha256.min.js"></script>
 <script>
     window.themeConfig = {
-        defaultAvatar: "/images/avatar.png",
-        avatarSpeed: "8s",
-        music: {"enable":true,"audio_url":"/music/Hanser - 猫耳开关（Cover miku）.mp3","cover_image":"/images/cover.jpg","song_name":"猫耳开关","artist":"Hanser","autoplay":false}
+        music: {"enable":true,"audio_url":"/music/Hanser - 猫耳开关（Cover miku）.mp3","cover_image":"/images/cover.jpg","song_name":"猫耳开关","artist":"Hanser","autoplay":false},
+        authEmailHash: "c6fdf775c5b0e8a2cf5c13a9514f06604cfb6b16e4a9d3c2100f810775c3d05a",
+        authPasswordHash: "96e6d5b96eeca4ddae761a376d13dc47998ce25103880297d028a0187c05900c",
+        avatarDefault: "/images/avatar.png",
+        avatarSpeed: "8s"
     };
 </script>
 <script src="/js/main.js"></script>
