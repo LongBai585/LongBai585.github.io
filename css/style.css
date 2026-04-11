@@ -417,9 +417,54 @@ footer {
     color: #c27e5c;
 }
 
+/* ========== 头图区域样式 ========== */
+.header-image-area {
+    width: 100%;
+    background: rgba(250, 245, 235, 0.9);
+    border-radius: 48px 48px 0 0;
+    overflow: hidden;
+    position: relative;
+}
+/* 头图区域 - 自适应高度完整显示 */
+.header-image-container {
+    position: relative;
+    width: 100%;
+    height: auto;          /* 高度自动，由图片撑开 */
+    overflow: hidden;
+}
+.header-img {
+    width: 100%;
+    height: auto;          /* 高度自动，保持原始比例 */
+    display: block;
+}
+/* 按钮位置调整（固定在图片右下角） */
+.header-img-btn {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(0,0,0,0.6);
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 30px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    z-index: 10;
+}
+
+/* 其余样式与之前相同，仅补充头图响应式 */
 @media (max-width: 650px) {
-    .blog-inner { padding: 1rem; }
-    .profile-section { flex-direction: column; text-align: center; }
-    .stats-list { justify-content: center; }
-    .featured-posts { grid-template-columns: 1fr; }
+    .header-image-container {
+        height: 120px;
+    }
+}
+
+/* 将看板娘移动到右下角 */
+#live2d-widget,
+.live2d-widget {
+    left: auto !important;
+    right: 20px !important;
+    bottom: 20px !important;
+    top: auto !important;
 }

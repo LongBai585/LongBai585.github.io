@@ -47,18 +47,16 @@ if (typeContainer) {
     typeEffect();
 }
 
-// ========== 头像加载 + 错误处理 ==========
+// ========== 头像加载 ==========
 const avatarImg = document.getElementById('profileAvatar');
 if (avatarImg && window.themeConfig.avatarDefault) {
     const storedAvatar = localStorage.getItem('blog_avatar_custom');
     const avatarUrl = storedAvatar || window.themeConfig.avatarDefault;
     avatarImg.src = avatarUrl;
-    // 如果图片加载失败，替换为默认 SVG 头像
     avatarImg.onerror = function() {
         this.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23b87c4f'/%3E%3Ccircle cx='35' cy='40' r='5' fill='white'/%3E%3Ccircle cx='65' cy='40' r='5' fill='white'/%3E%3Ccircle cx='35' cy='40' r='2' fill='%23333'/%3E%3Ccircle cx='65' cy='40' r='2' fill='%23333'/%3E%3Cpath d='M40 65 Q50 75 60 65' stroke='%238b3a5e' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E";
         this.onerror = null;
     };
-    // 鼠标悬浮减速
     avatarImg.addEventListener('mouseenter', () => avatarImg.style.animationDuration = '20s');
     avatarImg.addEventListener('mouseleave', () => avatarImg.style.animationDuration = window.themeConfig.avatarSpeed || '8s');
 }
@@ -80,7 +78,37 @@ function fetchStats() {
 }
 fetchStats();
 
-// ========== 背景上传 + SHA-256 验证（修复版） ==========
+// ========== 头图上传（无需验证） ==========
+const headerImg = document.getElementById('headerImage');
+const headerInput = document.getElementById('headerInput');
+const uploadHeaderBtn = document.getElementById('uploadHeaderBtn');
+
+function loadHeaderImage() {
+    const storedHeader = localStorage.getItem('blog_header_image');
+    if (storedHeader) {
+        headerImg.src = storedHeader;
+    } else {
+        // 使用默认头图（可在配置中设置，若无则留空）
+        if (headerImg.src === '') headerImg.src = '/images/default-header.jpg';
+    }
+}
+function saveHeaderImage(url) {
+    localStorage.setItem('blog_header_image', url);
+    headerImg.src = url;
+}
+uploadHeaderBtn?.addEventListener('click', () => headerInput.click());
+headerInput?.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) { alert('请选择图片文件'); return; }
+    if (file.size > 2 * 1024 * 1024) { alert('图片请小于2MB'); return; }
+    const reader = new FileReader();
+    reader.onload = (ev) => saveHeaderImage(ev.target.result);
+    reader.readAsDataURL(file);
+});
+loadHeaderImage();
+
+// ========== 背景上传 + 验证（与之前相同） ==========
 const bgInput = document.getElementById('bgInput');
 const uploadBgBtn = document.getElementById('uploadBgBtn');
 const authModal = document.getElementById('authModal');
@@ -91,22 +119,17 @@ const authPassword = document.getElementById('authPassword');
 const authMessage = document.getElementById('authMessage');
 let pendingFile = null;
 
-// 验证函数：输出调试信息
 function verifyCredentials(email, password) {
     if (!window.themeConfig.authEmailHash || !window.themeConfig.authPasswordHash) {
         console.warn('未配置验证哈希，跳过验证');
         return true;
     }
-    // 去除首尾空格
     const cleanEmail = email.trim();
     const cleanPwd = password.trim();
     const emailHash = sha256(cleanEmail);
     const pwdHash = sha256(cleanPwd);
-    // 控制台输出比对信息（调试用，可删除）
-    console.log('输入邮箱:', cleanEmail, '哈希:', emailHash);
-    console.log('输入密码:', cleanPwd, '哈希:', pwdHash);
-    console.log('预设邮箱哈希:', window.themeConfig.authEmailHash);
-    console.log('预设密码哈希:', window.themeConfig.authPasswordHash);
+    console.log('输入邮箱哈希:', emailHash);
+    console.log('输入密码哈希:', pwdHash);
     return (emailHash === window.themeConfig.authEmailHash && pwdHash === window.themeConfig.authPasswordHash);
 }
 
