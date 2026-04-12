@@ -79,9 +79,9 @@ function fetchStats() {
 fetchStats();
 
 // ========== 头图上传（无需验证） ==========
-const headerImg = document.getElementById('headerImage');
-const headerInput = document.getElementById('headerInput');
-const uploadHeaderBtn = document.getElementById('uploadHeaderBtn');
+const heroImage = document.getElementById('heroImage');
+const heroInput = document.getElementById('heroInput');
+const uploadHeaderBtn = document.getElementById('uploadHeroBtn');
 
 function loadHeaderImage() {
     const storedHeader = localStorage.getItem('blog_header_image');

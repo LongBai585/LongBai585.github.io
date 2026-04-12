@@ -21,64 +21,64 @@
     </style>
 <meta name="generator" content="Hexo 8.1.1"></head>
 <body>
-<div class="blog-container">
-    <!-- 头部图片区域（类似参考图） -->
-    <div class="header-image-area">
-        <div class="header-image-container">
-            <img id="headerImage" class="header-img" src="/images/default-header.jpg" alt="头部图片">
-            <button id="uploadHeaderBtn" class="header-img-btn"><i class="fas fa-image"></i> 换头图</button>
-            <input type="file" id="headerInput" class="file-input-hidden" accept="image/*">
+<div class="site-wrapper">
+    <!-- 头图区域（宽幅） -->
+    <div class="hero-header">
+        <div class="hero-image-wrapper">
+            <img id="heroImage" class="hero-img" src="/images/default-header.jpg" alt="头图">
+            <button id="uploadHeroBtn" class="hero-img-btn"><i class="fas fa-image"></i> 换头图</button>
+            <input type="file" id="heroInput" class="file-input-hidden" accept="image/*">
+        </div>
+        <!-- 头像区域（叠在头图上或下方，这里放在头图下方居中） -->
+        <div class="profile-avatar">
+            <div class="avatar-wrapper">
+                <img id="profileAvatar" class="rotating-avatar" src="/images/avatar.png" alt="头像">
+            </div>
         </div>
     </div>
 
-    <div class="blog-inner">
-        <!-- 头部：头像 + 博客信息 -->
-        <div class="profile-section">
-            <div class="avatar-area">
-                <div class="avatar-wrapper">
-                    <img id="profileAvatar" class="rotating-avatar" src="/images/avatar.png" alt="头像">
-                </div>
-            </div>
-            <div class="blog-info">
-                <h1 class="blog-title">カンタルの部屋</h1>
-                <div class="blog-subtitle">特別なことばかりで、君がいる十分です。</div>
-                <div class="blog-desc">记录开发故事，探寻开发过程</div>
-                <hr class="divider-cute">
-                <div class="signature">✎ 一期一会，步履不停</div>
-                <!-- 换背景按钮（body背景） -->
-                <button id="uploadBgBtn" class="bg-btn"><i class="fas fa-backward"></i> 换背景</button>
-                <input type="file" id="bgInput" class="file-input-hidden" accept="image/*">
-            </div>
+    <div class="content-container">
+        <!-- 博客信息 -->
+        <div class="blog-info-header">
+            <h1 class="blog-title">カンタルの部屋</h1>
+            <div class="blog-subtitle">特別なことばかりで、君がいる十分です。</div>
+            <div class="blog-desc">记录开发故事，探寻开发过程</div>
+            <div class="signature">✎ 一期一会，步履不停</div>
+            <!-- 换背景按钮（body背景） -->
+            <button id="uploadBgBtn" class="bg-btn"><i class="fas fa-backward"></i> 换背景</button>
+            <input type="file" id="bgInput" class="file-input-hidden" accept="image/*">
+        </div>
+
+        <!-- 统计卡片（网格布局） -->
+        <div class="stats-grid">
+            <div class="stat-item"><i class="fas fa-file-alt"></i> <span id="postCount">0</span> <span>記事</span></div>
+            <div class="stat-item"><i class="fas fa-folder"></i> <span id="categoryCount">0</span> <span>カテゴリー</span></div>
+            <div class="stat-item"><i class="fas fa-tags"></i> <span id="tagCount">0</span> <span>タグ</span></div>
+            <div class="stat-item"><i class="fas fa-calendar-day"></i> <span id="runDays">0</span> <span>運用日数</span></div>
+            <div class="stat-item"><i class="fas fa-sync-alt"></i> <span id="lastUpdate">—</span> <span>最終更新</span></div>
+        </div>
+
+        <!-- 通知栏（简洁） -->
+        <div class="notice-bar">
+            <i class="fas fa-bell"></i>
+            <span>✨ 博客全新改版 | 头图/背景可自定义 | 欢迎留言 ✨</span>
         </div>
 
         <!-- 时间 + 打字机 -->
-        <div class="time-ticker-section">
-            <div class="time-wrapper"><div class="live-time" id="liveClock"></div></div>
+        <div class="time-ticker">
+            <div class="live-time" id="liveClock"></div>
             <div class="scroll-area">
                 <div class="scroll-content" id="scrollText"></div>
             </div>
         </div>
 
-        <!-- 统计卡片 -->
-        <div class="stats-card">
-            <h3><i class="fas fa-chart-simple"></i> サイト統計</h3>
-            <ul class="stats-list">
-                <li><i class="fas fa-file-alt"></i> 記事数：<span id="postCount">0</span></li>
-                <li><i class="fas fa-folder"></i> カテゴリー数：<span id="categoryCount">0</span></li>
-                <li><i class="fas fa-tags"></i> タグ数：<span id="tagCount">0</span></li>
-                <li><i class="fas fa-calendar-day"></i> 運用日数：<span id="runDays">0</span> 日</li>
-                <li><i class="fas fa-sync-alt"></i> 最終更新：<span id="lastUpdate">—</span></li>
-            </ul>
-        </div>
-
-        <!-- 通知栏 -->
-        <div class="notice-bar">
-            <i class="fas fa-bell"></i>
-            <span class="notice-text">✨ 博客全新改版 | 头图可自定义 | 欢迎留言 ✨</span>
-        </div>
-
-        <!-- 文章主体 -->
+        <!-- 文章主体内容（首页为 index.ejs，其他页面为 post.ejs） -->
         <article class="post-full">
+    <div class="post-nav">
+        <a href="/" class="back-home-btn">
+            <i class="fas fa-arrow-left"></i> 返回首页
+        </a>
+    </div>
     <header class="post-header">
         <h1 class="post-title-full">洛克王国世界 · 工具攻略收集站</h1>
         <div class="post-meta">
@@ -98,6 +98,8 @@
     </header>
     <div class="post-content">
         <p>欢迎来到 <strong>洛克王国世界</strong> 的非官方工具攻略站！这里汇集了实用的游戏工具、最新攻略和社区交流平台，助你轻松成为王国大师。</p>
+<span id="more"></span>
+
 
 <div class="rock-kingdom-tools">
     <div class="tools-header">
@@ -352,7 +354,7 @@ window.onclick = function(event) {
     </div>
 </div>
 
-<!-- 验证模态框（用于换背景） -->
+<!-- 验证模态框（换背景） -->
 <div id="authModal" class="auth-modal">
     <div class="auth-modal-content">
         <span class="close-auth">&times;</span>
