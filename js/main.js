@@ -63,61 +63,36 @@ if (avatarImg && window.themeConfig.avatarDefault) {
 
 // ========== 统计信息 ==========
 function fetchStats() {
-    const postCards = document.querySelectorAll('.post-card');
+    const postCards = document.querySelectorAll('.post-card, .post-item');
     const postCount = postCards.length;
     if (postCount > 0) document.getElementById('postCount').innerText = postCount;
-    else document.getElementById('postCount').innerText = '3';
+    else document.getElementById('postCount').innerText = '2';
     document.getElementById('categoryCount').innerText = '2';
     document.getElementById('tagCount').innerText = '5';
     const startDate = new Date(2024, 3, 5);
     const diffDays = Math.floor((Date.now() - startDate) / (1000 * 60 * 60 * 24));
     document.getElementById('runDays').innerText = diffDays;
-    const lastPostDate = document.querySelector('.post-card:first-child .post-date');
-    if (lastPostDate) document.getElementById('lastUpdate').innerText = lastPostDate.innerText.trim();
-    else document.getElementById('lastUpdate').innerText = '2026-04-11';
+    const lastPostDate = document.querySelector('.post-item:first-child .post-date-large');
+    if (lastPostDate) document.getElementById('lastUpdate').innerText = '2026-04-12';
+    else document.getElementById('lastUpdate').innerText = '2026-04-12';
 }
 fetchStats();
 
-// ========== 头图上传（无需验证） ==========
-const heroImage = document.getElementById('heroImage');
-const heroInput = document.getElementById('heroInput');
-const uploadHeaderBtn = document.getElementById('uploadHeroBtn');
-
-function loadHeaderImage() {
-    const storedHeader = localStorage.getItem('blog_header_image');
-    if (storedHeader) {
-        headerImg.src = storedHeader;
-    } else {
-        // 使用默认头图（可在配置中设置，若无则留空）
-        if (headerImg.src === '') headerImg.src = '/images/default-header.jpg';
-    }
-}
-function saveHeaderImage(url) {
-    localStorage.setItem('blog_header_image', url);
-    headerImg.src = url;
-}
-uploadHeaderBtn?.addEventListener('click', () => headerInput.click());
-headerInput?.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    if (!file.type.startsWith('image/')) { alert('请选择图片文件'); return; }
-    if (file.size > 2 * 1024 * 1024) { alert('图片请小于2MB'); return; }
-    const reader = new FileReader();
-    reader.onload = (ev) => saveHeaderImage(ev.target.result);
-    reader.readAsDataURL(file);
-});
-loadHeaderImage();
-
-// ========== 背景上传 + 验证（与之前相同） ==========
+// ========== 背景与头图上传（共用验证） ==========
 const bgInput = document.getElementById('bgInput');
 const uploadBgBtn = document.getElementById('uploadBgBtn');
+const heroInput = document.getElementById('heroInput');
+const uploadHeroBtn = document.getElementById('uploadHeroBtn');
 const authModal = document.getElementById('authModal');
 const closeAuth = document.querySelector('.close-auth');
 const submitAuthBtn = document.getElementById('submitAuthBtn');
 const authEmail = document.getElementById('authEmail');
 const authPassword = document.getElementById('authPassword');
 const authMessage = document.getElementById('authMessage');
-let pendingFile = null;
+
+let pendingFile = null;          // 背景暂存
+let pendingHeroFile = null;      // 头图暂存
+let pendingUploadType = null;    // 'background' 或 'hero'
 
 function verifyCredentials(email, password) {
     if (!window.themeConfig.authEmailHash || !window.themeConfig.authPasswordHash) {
@@ -128,11 +103,10 @@ function verifyCredentials(email, password) {
     const cleanPwd = password.trim();
     const emailHash = sha256(cleanEmail);
     const pwdHash = sha256(cleanPwd);
-    console.log('输入邮箱哈希:', emailHash);
-    console.log('输入密码哈希:', pwdHash);
     return (emailHash === window.themeConfig.authEmailHash && pwdHash === window.themeConfig.authPasswordHash);
 }
 
+// 背景相关
 function loadBackground() {
     const stored = localStorage.getItem('blog_background');
     if (stored) document.body.style.backgroundImage = `url(${stored})`;
@@ -142,70 +116,165 @@ function saveBackground(url) {
     localStorage.setItem('blog_background', url);
     document.body.style.backgroundImage = `url(${url})`;
 }
-function doUpload(file) {
+function doUploadBackground(file) {
     if (!file) return;
     if (!file.type.startsWith('image/')) { alert('请选择图片文件'); return; }
-    if (file.size > 3 * 1024 * 1024) { alert('图片小于3MB'); return; }
+    if (file.size > 3 * 1024 * 1024) { alert('背景图片请小于3MB'); return; }
     const reader = new FileReader();
     reader.onload = (e) => {
         saveBackground(e.target.result);
         authModal.style.display = 'none';
-        if (authEmail) authEmail.value = '';
-        if (authPassword) authPassword.value = '';
+        authMessage.innerText = '';
         pendingFile = null;
         alert('背景更换成功！');
     };
     reader.readAsDataURL(file);
 }
-uploadBgBtn?.addEventListener('click', () => bgInput.click());
-bgInput?.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    pendingFile = file;
-    authModal.style.display = 'flex';
-    if (authEmail) authEmail.value = '';
-    if (authPassword) authPassword.value = '';
-    if (authMessage) authMessage.innerText = '';
-});
-submitAuthBtn?.addEventListener('click', () => {
-    const email = authEmail ? authEmail.value : '';
-    const pwd = authPassword ? authPassword.value : '';
-    if (!email || !pwd) {
-        authMessage.innerText = '请输入邮箱和密码';
-        return;
-    }
-    if (verifyCredentials(email, pwd)) {
-        if (pendingFile) doUpload(pendingFile);
-        else authModal.style.display = 'none';
-    } else {
-        authMessage.innerText = '邮箱或密码错误，请重试';
-    }
-});
-closeAuth?.addEventListener('click', () => {
-    authModal.style.display = 'none';
-    pendingFile = null;
-});
-window.onclick = (e) => { if (e.target === authModal) { authModal.style.display = 'none'; pendingFile = null; } };
-loadBackground();
 
-// ========== 音乐播放器 ==========
+// 头图相关
+function loadHeroImage() {
+    const stored = localStorage.getItem('blog_hero_image');
+    const heroImg = document.getElementById('heroImage');
+    if (stored) {
+        heroImg.src = stored;
+    } else {
+        heroImg.src = '/images/default-header.jpg';
+    }
+}
+function saveHeroImage(url) {
+    localStorage.setItem('blog_hero_image', url);
+    document.getElementById('heroImage').src = url;
+}
+function doUploadHero(file) {
+    if (!file) return;
+    if (!file.type.startsWith('image/')) { alert('请选择图片文件'); return; }
+    if (file.size > 2 * 1024 * 1024) { alert('头图请小于2MB'); return; }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        saveHeroImage(e.target.result);
+        authModal.style.display = 'none';
+        authMessage.innerText = '';
+        pendingHeroFile = null;
+        alert('头图更换成功！');
+    };
+    reader.readAsDataURL(file);
+}
+
+// 打开背景选择
+if (uploadBgBtn) {
+    uploadBgBtn.addEventListener('click', () => bgInput.click());
+}
+if (bgInput) {
+    bgInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        pendingFile = file;
+        pendingUploadType = 'background';
+        authModal.style.display = 'flex';
+        if (authEmail) authEmail.value = '';
+        if (authPassword) authPassword.value = '';
+        if (authMessage) authMessage.innerText = '';
+    });
+}
+
+// 打开头图选择
+if (uploadHeroBtn) {
+    uploadHeroBtn.addEventListener('click', () => heroInput.click());
+}
+if (heroInput) {
+    heroInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        pendingHeroFile = file;
+        pendingUploadType = 'hero';
+        authModal.style.display = 'flex';
+        if (authEmail) authEmail.value = '';
+        if (authPassword) authPassword.value = '';
+        if (authMessage) authMessage.innerText = '';
+    });
+}
+
+// 提交验证
+if (submitAuthBtn) {
+    submitAuthBtn.addEventListener('click', () => {
+        const email = authEmail ? authEmail.value.trim() : '';
+        const pwd = authPassword ? authPassword.value.trim() : '';
+        if (!email || !pwd) {
+            authMessage.innerText = '请输入邮箱和密码';
+            return;
+        }
+        if (verifyCredentials(email, pwd)) {
+            if (pendingUploadType === 'background') {
+                if (pendingFile) doUploadBackground(pendingFile);
+                else authModal.style.display = 'none';
+            } else if (pendingUploadType === 'hero') {
+                if (pendingHeroFile) doUploadHero(pendingHeroFile);
+                else authModal.style.display = 'none';
+            } else {
+                authModal.style.display = 'none';
+            }
+            pendingUploadType = null;
+            if (authEmail) authEmail.value = '';
+            if (authPassword) authPassword.value = '';
+        } else {
+            authMessage.innerText = '邮箱或密码错误，请重试';
+        }
+    });
+}
+
+// 关闭弹窗
+if (closeAuth) {
+    closeAuth.addEventListener('click', () => {
+        authModal.style.display = 'none';
+        pendingFile = null;
+        pendingHeroFile = null;
+        pendingUploadType = null;
+        if (authEmail) authEmail.value = '';
+        if (authPassword) authPassword.value = '';
+    });
+}
+window.onclick = (e) => {
+    if (e.target === authModal) {
+        authModal.style.display = 'none';
+        pendingFile = null;
+        pendingHeroFile = null;
+        pendingUploadType = null;
+        if (authEmail) authEmail.value = '';
+        if (authPassword) authPassword.value = '';
+    }
+};
+
+loadBackground();
+loadHeroImage();
+
+// ========== 音乐播放器（修复自动播放和声音） ==========
 if (window.themeConfig?.music?.enable) {
     const audio = document.getElementById('bgAudio');
     const playPauseBtn = document.getElementById('playPauseBtn');
     const volumeSlider = document.getElementById('volumeSlider');
     const muteBtn = document.getElementById('muteBtn');
     let isMuted = false, lastVolume = 0.5;
+    let autoPlayAttempted = false;
+
     if (audio && playPauseBtn) {
+        audio.volume = 0.5;
+        if (volumeSlider) volumeSlider.value = 0.5;
+
         playPauseBtn.addEventListener('click', () => {
             if (audio.paused) {
-                audio.play().catch(e => console.log);
-                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                audio.play().then(() => {
+                    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                }).catch(e => console.log('播放失败:', e));
             } else {
                 audio.pause();
                 playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
             }
         });
-        audio.addEventListener('ended', () => playPauseBtn.innerHTML = '<i class="fas fa-play"></i>');
+
+        audio.addEventListener('ended', () => {
+            playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        });
+
         if (volumeSlider) {
             volumeSlider.addEventListener('input', (e) => {
                 const vol = parseFloat(e.target.value);
@@ -220,23 +289,44 @@ if (window.themeConfig?.music?.enable) {
                 }
             });
         }
+
         if (muteBtn) {
             muteBtn.addEventListener('click', () => {
                 if (isMuted) {
                     audio.volume = lastVolume;
-                    volumeSlider.value = lastVolume;
+                    if (volumeSlider) volumeSlider.value = lastVolume;
                     muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
                     isMuted = false;
                 } else {
                     lastVolume = audio.volume;
                     audio.volume = 0;
-                    volumeSlider.value = 0;
+                    if (volumeSlider) volumeSlider.value = 0;
                     muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
                     isMuted = true;
                 }
             });
         }
-        if (window.themeConfig.music.autoplay) audio.play().catch(() => {});
+
+        function attemptAutoPlay() {
+            if (autoPlayAttempted) return;
+            audio.play().then(() => {
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                autoPlayAttempted = true;
+            }).catch(() => {
+                const enableAudio = () => {
+                    audio.play().then(() => {
+                        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                        autoPlayAttempted = true;
+                    }).catch(() => {});
+                    document.removeEventListener('click', enableAudio);
+                };
+                document.addEventListener('click', enableAudio);
+            });
+        }
+
+        if (window.themeConfig.music.autoplay) {
+            attemptAutoPlay();
+        }
     }
 }
 
