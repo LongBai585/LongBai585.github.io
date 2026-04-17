@@ -87,3 +87,151 @@ if (timeDiv) {
         setTimeout(() => updateClock(), 1500);
     });
 }
+
+// ========== 音乐播放器拖拽功能 ==========
+(function() {
+    // 等待播放器元素加载
+    const playerElement = document.querySelector('.aplayer-fixed');
+    if (!playerElement) {
+        console.warn('未找到播放器元素，拖拽功能暂不生效');
+        return;
+    }
+
+    let isDragging = false;
+    let startX, startY, startLeft, startTop;
+
+    // 重置位置到右下角
+    const resetPosition = () => {
+        playerElement.style.left = 'auto';
+        playerElement.style.right = '20px';
+        playerElement.style.top = 'auto';
+        playerElement.style.bottom = '20px';
+        playerElement.style.transform = 'none';
+        // 清除保存的位置
+        localStorage.removeItem('playerLeft');
+        localStorage.removeItem('playerTop');
+    };
+
+    // 鼠标按下
+    const onMouseDown = (e) => {
+        // 防止点击播放器内部按钮时触发拖拽（例如播放/暂停、音量、切歌等）
+        if (e.target.closest('.aplayer-pic, .aplayer-info, .aplayer-list, .aplayer-icon')) {
+            return;
+        }
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+
+        // 获取当前播放器的位置（相对于视口）
+        const rect = playerElement.getBoundingClientRect();
+        startLeft = rect.left;
+        startTop = rect.top;
+
+        // 临时改为绝对定位（相对于视口），方便拖拽
+        playerElement.style.position = 'fixed';
+        playerElement.style.left = startLeft + 'px';
+        playerElement.style.top = startTop + 'px';
+        playerElement.style.right = 'auto';
+        playerElement.style.bottom = 'auto';
+
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+    };
+
+    const onMouseMove = (e) => {
+        if (!isDragging) return;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        let newLeft = startLeft + dx;
+        let newTop = startTop + dy;
+
+        // 边界限制（防止拖出可视窗口）
+        const maxX = window.innerWidth - playerElement.offsetWidth;
+        const maxY = window.innerHeight - playerElement.offsetHeight;
+        newLeft = Math.min(Math.max(0, newLeft), maxX);
+        newTop = Math.min(Math.max(0, newTop), maxY);
+
+        playerElement.style.left = newLeft + 'px';
+        playerElement.style.top = newTop + 'px';
+    };
+
+    const onMouseUp = () => {
+        isDragging = false;
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+        // 保存位置
+        localStorage.setItem('playerLeft', playerElement.style.left);
+        localStorage.setItem('playerTop', playerElement.style.top);
+    };
+
+    // 双击重置到右下角
+    const onDoubleClick = (e) => {
+        // 避免双击按钮时误触发
+        if (e.target.closest('.aplayer-pic, .aplayer-info, .aplayer-list, .aplayer-icon')) {
+            return;
+        }
+        resetPosition();
+    };
+
+    // 触摸事件支持（移动端）
+    const onTouchStart = (e) => {
+        const touch = e.touches[0];
+        if (e.target.closest('.aplayer-pic, .aplayer-info, .aplayer-list, .aplayer-icon')) {
+            return;
+        }
+        isDragging = true;
+        startX = touch.clientX;
+        startY = touch.clientY;
+        const rect = playerElement.getBoundingClientRect();
+        startLeft = rect.left;
+        startTop = rect.top;
+        playerElement.style.position = 'fixed';
+        playerElement.style.left = startLeft + 'px';
+        playerElement.style.top = startTop + 'px';
+        playerElement.style.right = 'auto';
+        playerElement.style.bottom = 'auto';
+        document.addEventListener('touchmove', onTouchMove);
+        document.addEventListener('touchend', onTouchEnd);
+    };
+
+    const onTouchMove = (e) => {
+        if (!isDragging) return;
+        const touch = e.touches[0];
+        const dx = touch.clientX - startX;
+        const dy = touch.clientY - startY;
+        let newLeft = startLeft + dx;
+        let newTop = startTop + dy;
+        const maxX = window.innerWidth - playerElement.offsetWidth;
+        const maxY = window.innerHeight - playerElement.offsetHeight;
+        newLeft = Math.min(Math.max(0, newLeft), maxX);
+        newTop = Math.min(Math.max(0, newTop), maxY);
+        playerElement.style.left = newLeft + 'px';
+        playerElement.style.top = newTop + 'px';
+    };
+
+    const onTouchEnd = () => {
+        isDragging = false;
+        document.removeEventListener('touchmove', onTouchMove);
+        document.removeEventListener('touchend', onTouchEnd);
+        localStorage.setItem('playerLeft', playerElement.style.left);
+        localStorage.setItem('playerTop', playerElement.style.top);
+    };
+
+    // 恢复之前保存的位置
+    const savedLeft = localStorage.getItem('playerLeft');
+    const savedTop = localStorage.getItem('playerTop');
+    if (savedLeft && savedTop && savedLeft !== 'auto' && savedTop !== 'auto') {
+        playerElement.style.position = 'fixed';
+        playerElement.style.left = savedLeft;
+        playerElement.style.top = savedTop;
+        playerElement.style.right = 'auto';
+        playerElement.style.bottom = 'auto';
+    } else {
+        resetPosition();
+    }
+
+    // 添加事件监听
+    playerElement.addEventListener('mousedown', onMouseDown);
+    playerElement.addEventListener('dblclick', onDoubleClick);
+    playerElement.addEventListener('touchstart', onTouchStart);
+})();
