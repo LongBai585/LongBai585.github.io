@@ -13,7 +13,7 @@ body {
     overflow-x: hidden;
 }
 
-/* 背景图层（暖色叠加） */
+/* 背景图层 */
 .bg-layer {
     position: fixed;
     top: 0;
@@ -28,7 +28,7 @@ body {
     filter: brightness(1.05) sepia(0.1);
 }
 
-/* 页面进入过渡动画（暖色渐变） */
+/* 页面过渡动画 */
 .page-transition {
     position: fixed;
     top: 0;
@@ -45,7 +45,7 @@ body {
     100% { opacity: 0; transform: scale(1.05); visibility: hidden; }
 }
 
-/* 主容器（暖色半透明） */
+/* 主容器 */
 .site-wrapper {
     max-width: 1100px;
     margin: 0 auto;
@@ -79,7 +79,7 @@ body {
     object-fit: cover;
 }
 
-/* ========== 纯 CSS/SVG 波浪（无需外部图片） ========== */
+/* 纯 SVG 波浪 */
 .wave {
     position: absolute;
     bottom: 0;
@@ -116,7 +116,7 @@ body {
     100% { background-position: -200px 0; }
 }
 
-/* 头像区域（暖色边框） */
+/* 头像区域 */
 .profile-avatar {
     text-align: center;
     margin-top: -60px;
@@ -150,7 +150,7 @@ body {
     padding: 2rem 2rem 1.5rem;
 }
 
-/* 博客信息（暖色文字） */
+/* 博客信息 */
 .blog-info-header {
     text-align: center;
     margin-bottom: 2rem;
@@ -179,7 +179,7 @@ body {
     margin-top: 0.5rem;
 }
 
-/* 统计卡片网格（暖色半透明） */
+/* 统计卡片 */
 .stats-grid {
     display: flex;
     flex-wrap: wrap;
@@ -211,7 +211,7 @@ body {
     color: #b5651e;
 }
 
-/* 通知栏（暖色闪烁） */
+/* 通知栏 */
 .notice-bar {
     background: rgba(255,200,150,0.5);
     border-radius: 40px;
@@ -332,7 +332,7 @@ body {
     box-shadow: 0 4px 12px rgba(255,140,66,0.4);
 }
 
-/* 文章页独立样式 + 彩色返回按钮 */
+/* 文章页 */
 .post-full {
     background: rgba(255,245,235,0.9);
     border-radius: 32px;
@@ -400,20 +400,40 @@ body {
     margin: 0 4px;
 }
 
-/* 音乐播放器样式覆盖（暖色） */
-.aplayer {
-    border-radius: 60px !important;
-    background: rgba(255,245,235,0.9) !important;
-    backdrop-filter: blur(8px);
-    border: 1px solid #ffb347 !important;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+/* ========== 官方播放器容器（可拖拽，右下角） ========== */
+.official-player-wrapper {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
     z-index: 1000;
+    background: rgba(255, 245, 235, 0.9);
+    backdrop-filter: blur(8px);
+    border-radius: 60px;
+    padding: 6px 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border: 1px solid #ffb347;
+    transition: transform 0.2s;
+    cursor: grab;
+    user-select: none;
 }
-.aplayer .aplayer-info .aplayer-controller .aplayer-time {
-    color: #e67e22 !important;
+.official-player-wrapper:active {
+    cursor: grabbing;
 }
-.aplayer .aplayer-lrc {
-    display: none;
+.official-player-wrapper iframe {
+    display: block;
+    border-radius: 40px;
+    pointer-events: auto; /* 确保按钮可点 */
+}
+
+/* 移动端适配 */
+@media (max-width: 650px) {
+    .official-player-wrapper {
+        transform: scale(0.85);
+        transform-origin: bottom right;
+        bottom: 10px;
+        right: 10px;
+        padding: 4px 8px;
+    }
 }
 
 /* 页脚 */
@@ -434,7 +454,7 @@ footer {
     color: #e67e22;
 }
 
-/* 响应式 */
+/* 响应式调整 */
 @media (max-width: 650px) {
     .hero-image-wrapper {
         height: 200px;
@@ -459,78 +479,4 @@ footer {
         height: 60px;
         background-size: 150px 60px;
     }
-}
-
-/* 自定义歌单面板 */
-.custom-playlist-panel {
-    position: fixed;
-    bottom: 100px;
-    right: 20px;
-    width: 280px;
-    max-height: 400px;
-    background: rgba(255, 245, 235, 0.95);
-    backdrop-filter: blur(12px);
-    border-radius: 20px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    border: 1px solid rgba(255,180,100,0.5);
-    z-index: 1001;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    font-family: 'Quicksand', sans-serif;
-}
-.playlist-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 16px;
-    background: rgba(255,200,150,0.3);
-    border-bottom: 1px solid rgba(200,120,50,0.2);
-    font-weight: 600;
-    color: #8b4c1a;
-}
-.playlist-header .close-playlist {
-    background: none;
-    border: none;
-    font-size: 1.2rem;
-    cursor: pointer;
-    color: #e67e22;
-}
-.playlist-songs {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    overflow-y: auto;
-    max-height: 320px;
-}
-.playlist-songs li {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 16px;
-    cursor: pointer;
-    transition: 0.2s;
-    border-bottom: 1px solid rgba(200,120,50,0.1);
-    font-size: 0.85rem;
-    color: #6b3f1a;
-}
-.playlist-songs li:hover {
-    background: rgba(255,180,71,0.2);
-}
-.playlist-songs li.active {
-    background: rgba(255,180,71,0.3);
-    color: #e67e22;
-}
-.playlist-songs .song-artist {
-    font-size: 0.7rem;
-    color: #b5651e;
-    margin-left: 8px;
-}
-
-/* 播放器可拖拽区域光标 */
-.aplayer-fixed {
-    cursor: grab;
-    user-select: none; /* 避免拖拽时选中文字 */
-}
-.aplayer-fixed:active {
-    cursor: grabbing;
 }

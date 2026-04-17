@@ -7,11 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-    <!-- APlayer 和 MetingJS 核心文件（使用国内 BootCDN，更稳定） -->
-    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/aplayer/1.10.1/APlayer.min.css">
-    <script src="https://cdn.bootcdn.net/ajax/libs/aplayer/1.10.1/APlayer.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
-    
     <link rel="stylesheet" href="/css/style.css">
     <style>
         :root {
@@ -25,12 +20,15 @@
             --avatar-speed: 8s;
         }
     </style>
+    <!-- 预加载 jQuery（看板娘依赖） -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <meta name="generator" content="Hexo 8.1.1"></head>
 <body>
 <div class="bg-layer" style="background-image: url('/images/bg.jpg');"></div>
 <div class="page-transition"></div>
 
 <div class="site-wrapper">
+    <!-- 头图区域 + 波浪 -->
     <div class="hero-header">
         <div class="hero-image-wrapper">
             <img class="hero-img" src="/images/header.jpg" alt="头图">
@@ -47,7 +45,6 @@
     </div>
 
     <div class="content-container">
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="https://music.163.com/outchain/player?type=0&id=17882023844&auto=0&height=66"></iframe>
         <div class="blog-info-header">
             <h1 class="blog-title">汐音_Shione</h1>
             <div class="blog-subtitle">特別なことばかりで、君がいる十分です。</div>
@@ -55,6 +52,7 @@
             <div class="signature">✎ 一期一会，步履不停</div>
         </div>
 
+        <!-- 统计卡片（动态数据由 main.js 填充） -->
         <div class="stats-grid">
             <div class="stat-item"><i class="fas fa-file-alt"></i> <span id="postCount">0</span> <span>記事</span></div>
             <div class="stat-item"><i class="fas fa-folder"></i> <span id="categoryCount">0</span> <span>カテゴリー</span></div>
@@ -63,11 +61,13 @@
             <div class="stat-item"><i class="fas fa-sync-alt"></i> <span id="lastUpdate">—</span> <span>最終更新</span></div>
         </div>
 
+        <!-- 通知栏 -->
         <div class="notice-bar">
             <i class="fas fa-bell"></i>
             <span>✨ 欢迎来到二次元幻境 | 音乐陪伴每一刻 ✨</span>
         </div>
 
+        <!-- 时间 + 打字机 -->
         <div class="time-ticker">
             <div class="live-time" id="liveClock"></div>
             <div class="scroll-area">
@@ -75,6 +75,7 @@
             </div>
         </div>
 
+        <!-- 文章主体内容 -->
         <div class="post-list">
     
         
@@ -101,6 +102,7 @@
 
 
 
+        <!-- 页脚 -->
         <footer>
             <div class="footer-social">
                 
@@ -117,24 +119,21 @@
     </div>
 </div>
 
-<!-- 网易云音乐播放器（使用稳定 API 代理） -->
-<meting-js
-    server="netease"
-    type="playlist"
-    id="17882023844"
-    fixed="true"
-    autoplay="false"
-    theme="#ff6ec7"
-    loop="all"
-    order="list"
-    list-folded="true"
-    volume="0.5"
-    preload="auto"
-    api="https://meting-api.vercel.app/api">
-</meting-js>
+<!-- 网易云官方播放器（歌单ID：17882023844，高度90确保显示切歌和列表按钮） -->
+<div class="official-player-wrapper" id="officialPlayer">
+    <iframe 
+        frameborder="no" 
+        border="0" 
+        marginwidth="0" 
+        marginheight="0" 
+        width="330" 
+        height="120" 
+        src="https://music.163.com/outchain/player?type=0&id=17882023844&auto=0&height=90">
+    </iframe>
+</div>
 
-<!-- 看板娘（本地 live2d.js） -->
-<script src="/js/live2d.js"></script>
+<!-- 自定义看板娘（使用您的本地模型和加载器） -->
+<script src="/live2d/live2d.min.js"></script>
 
 <script>
     window.themeConfig = {
