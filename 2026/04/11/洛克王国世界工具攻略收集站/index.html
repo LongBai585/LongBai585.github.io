@@ -3,33 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Hexo | 古风·简素</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>Hexo | 二次元幻境</title>
+    <!-- 字体 & 图标库 -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Aplayer 和 MetingJS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
     <link rel="stylesheet" href="/css/style.css">
     <style>
         :root {
-            --primary: #8b6b4d;
-            --secondary: #5a3e2b;
-            --accent: #c9aa7b;
-            --bg1: #f8f4ed;
-            --bg2: #f0e8da;
-            --bg3: #e6d9c8;
-            --text: #3a2a1f;
+            --primary: #ff6ec7;
+            --secondary: #66ccff;
+            --accent: #ffd700;
+            --bg1: #2b1b3a;
+            --bg2: #1a2a3a;
+            --bg3: #0f1a2a;
+            --text: #f0e6d0;
             --avatar-speed: 8s;
         }
     </style>
 <meta name="generator" content="Hexo 8.1.1"></head>
 <body>
+<div class="page-transition"></div>
 <div class="site-wrapper">
-    <!-- 头图区域（宽幅） -->
+    <!-- 头图区域 + 波浪效果 -->
     <div class="hero-header">
         <div class="hero-image-wrapper">
-            <img id="heroImage" class="hero-img" src="/images/default-header.jpg" alt="头图">
-            <button id="uploadHeroBtn" class="hero-img-btn"><i class="fas fa-image"></i> 换头图</button>
-            <input type="file" id="heroInput" class="file-input-hidden" accept="image/*">
+            <img class="hero-img" src="/images/header.jpg" alt="头图">
+            <!-- SVG 波浪 -->
+            <svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120">
+                <path fill="rgba(255,255,255,0.2)" fill-opacity="1" d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"></path>
+            </svg>
         </div>
-        <!-- 头像区域（叠在头图上或下方，这里放在头图下方居中） -->
         <div class="profile-avatar">
             <div class="avatar-wrapper">
                 <img id="profileAvatar" class="rotating-avatar" src="/images/avatar.png" alt="头像">
@@ -38,18 +45,14 @@
     </div>
 
     <div class="content-container">
-        <!-- 博客信息 -->
         <div class="blog-info-header">
-            <h1 class="blog-title">カンタルの部屋</h1>
+            <h1 class="blog-title">汐音_Shione</h1>
             <div class="blog-subtitle">特別なことばかりで、君がいる十分です。</div>
             <div class="blog-desc">记录开发故事，探寻开发过程</div>
             <div class="signature">✎ 一期一会，步履不停</div>
-            <!-- 换背景按钮（body背景） -->
-            <button id="uploadBgBtn" class="bg-btn"><i class="fas fa-backward"></i> 换背景</button>
-            <input type="file" id="bgInput" class="file-input-hidden" accept="image/*">
         </div>
 
-        <!-- 统计卡片（网格布局） -->
+        <!-- 统计卡片网格 -->
         <div class="stats-grid">
             <div class="stat-item"><i class="fas fa-file-alt"></i> <span id="postCount">0</span> <span>記事</span></div>
             <div class="stat-item"><i class="fas fa-folder"></i> <span id="categoryCount">0</span> <span>カテゴリー</span></div>
@@ -58,10 +61,10 @@
             <div class="stat-item"><i class="fas fa-sync-alt"></i> <span id="lastUpdate">—</span> <span>最終更新</span></div>
         </div>
 
-        <!-- 通知栏（简洁） -->
+        <!-- 通知栏 -->
         <div class="notice-bar">
             <i class="fas fa-bell"></i>
-            <span>✨ 博客全新改版 | 头图/背景可自定义 | 欢迎留言 ✨</span>
+            <span>✨ 欢迎来到二次元幻境 | 音乐陪伴每一刻 ✨</span>
         </div>
 
         <!-- 时间 + 打字机 -->
@@ -72,7 +75,7 @@
             </div>
         </div>
 
-        <!-- 文章主体内容（首页为 index.ejs，其他页面为 post.ejs） -->
+        <!-- 文章主体 -->
         <article class="post-full">
     <div class="post-nav">
         <a href="/" class="back-home-btn">
@@ -337,7 +340,6 @@ window.onclick = function(event) {
     </footer>
 </article>
 
-        <!-- 页脚 -->
         <footer>
             <div class="footer-social">
                 
@@ -348,53 +350,52 @@ window.onclick = function(event) {
                 
             </div>
             <div class="footer-text">
-                <i class="fas fa-music"></i> 夢とコードの狭間で  |  © 泷白 简素之境 | v440
+                <i class="fas fa-music"></i> 夢とコードの狭間で  |  © 泷白 二次元幻境 | v440
             </div>
         </footer>
     </div>
 </div>
 
-<!-- 验证模态框（换背景） -->
-<div id="authModal" class="auth-modal">
-    <div class="auth-modal-content">
-        <span class="close-auth">&times;</span>
-        <h3><i class="fas fa-lock"></i> 身份验证</h3>
-        <p>请输入您的邮箱和密码以更换背景</p>
-        <input type="email" id="authEmail" placeholder="邮箱" class="auth-input">
-        <input type="password" id="authPassword" placeholder="密码" class="auth-input">
-        <button id="submitAuthBtn" class="auth-btn">验证并更换</button>
-        <div id="authMessage" class="auth-message"></div>
-    </div>
-</div>
+<!-- 网易云音乐播放器（使用 MetingJS） -->
 
-<!-- 音乐播放器 -->
-
-<div class="music-player" id="musicPlayer">
-    <div class="player-cover" style="background-image: url('/images/cover.jpg');"></div>
-    <div class="player-info">
-        <div class="song-name">猫耳开关</div>
-        <div class="artist-name">Hanser</div>
-    </div>
-    <div class="player-controls">
-        <button id="playPauseBtn" class="control-btn"><i class="fas fa-play"></i></button>
-        <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.01" value="0.5">
-        <button id="muteBtn" class="control-btn"><i class="fas fa-volume-up"></i></button>
-    </div>
-    <audio id="bgAudio" src="/music/Hanser - 猫耳开关（Cover miku）.mp3" preload="auto" ></audio>
-</div>
+<meting-js
+    server="netease"
+    type="playlist"
+    id="3778678"
+    theme="#ff6ec7"
+    autoplay="false"
+    list-folded="true"
+    preload="auto"
+    order="list"
+    volume="0.5"
+    fixed="true"
+    mini="false"
+    >
+</meting-js>
 
 
-<script src="https://cdn.jsdelivr.net/npm/js-sha256@0.9.0/build/sha256.min.js"></script>
 <script>
     window.themeConfig = {
-        music: {"enable":true,"audio_url":"/music/Hanser - 猫耳开关（Cover miku）.mp3","cover_image":"/images/cover.jpg","song_name":"猫耳开关","artist":"Hanser","autoplay":false},
-        authEmailHash: "9aecfcbad38d93a50990aeb72f0d733518c7ef9c45e11896b4a9224c68357b1d",
-        authPasswordHash: "96e6d5b96eeca4ddae761a376d13dc47998ce25103880297d028a0187c05900c",
         avatarDefault: "/images/avatar.png",
-        avatarSpeed: "8s"
+        avatarSpeed: "8s",
+        customIcon: "/images/custom-icon.png"
     };
 </script>
 <script src="/js/main.js"></script>
 <script src="/js/live2d.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js 
+    server="netease" 
+    type="playlist" 
+    id="17882023844" 
+    fixed="true" 
+    autoplay="false" 
+    theme="#ff6ec7"
+    loop="all"
+    order="list"
+    list-folded="true">
+</meting-js>
 </body>
 </html>
