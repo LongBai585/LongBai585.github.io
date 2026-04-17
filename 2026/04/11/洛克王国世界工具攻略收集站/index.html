@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Hexo | 二次元幻境</title>
-    <!-- 字体 & 图标库 -->
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Aplayer 和 MetingJS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <!-- APlayer 和 MetingJS 核心文件（使用国内 BootCDN，更稳定） -->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/aplayer/1.10.1/APlayer.min.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/aplayer/1.10.1/APlayer.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+    
     <link rel="stylesheet" href="/css/style.css">
     <style>
         :root {
@@ -26,16 +27,17 @@
     </style>
 <meta name="generator" content="Hexo 8.1.1"></head>
 <body>
+<div class="bg-layer" style="background-image: url('/images/bg.jpg');"></div>
 <div class="page-transition"></div>
+
 <div class="site-wrapper">
-    <!-- 头图区域 + 波浪效果 -->
     <div class="hero-header">
         <div class="hero-image-wrapper">
             <img class="hero-img" src="/images/header.jpg" alt="头图">
-            <!-- SVG 波浪 -->
-            <svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120">
-                <path fill="rgba(255,255,255,0.2)" fill-opacity="1" d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"></path>
-            </svg>
+            <div class="wave" id="wave1"></div>
+            <div class="wave" id="wave2"></div>
+            <div class="wave" id="wave3"></div>
+            <div class="wave" id="wave4"></div>
         </div>
         <div class="profile-avatar">
             <div class="avatar-wrapper">
@@ -52,7 +54,6 @@
             <div class="signature">✎ 一期一会，步履不停</div>
         </div>
 
-        <!-- 统计卡片网格 -->
         <div class="stats-grid">
             <div class="stat-item"><i class="fas fa-file-alt"></i> <span id="postCount">0</span> <span>記事</span></div>
             <div class="stat-item"><i class="fas fa-folder"></i> <span id="categoryCount">0</span> <span>カテゴリー</span></div>
@@ -61,13 +62,11 @@
             <div class="stat-item"><i class="fas fa-sync-alt"></i> <span id="lastUpdate">—</span> <span>最終更新</span></div>
         </div>
 
-        <!-- 通知栏 -->
         <div class="notice-bar">
             <i class="fas fa-bell"></i>
             <span>✨ 欢迎来到二次元幻境 | 音乐陪伴每一刻 ✨</span>
         </div>
 
-        <!-- 时间 + 打字机 -->
         <div class="time-ticker">
             <div class="live-time" id="liveClock"></div>
             <div class="scroll-area">
@@ -75,11 +74,10 @@
             </div>
         </div>
 
-        <!-- 文章主体 -->
         <article class="post-full">
     <div class="post-nav">
         <a href="/" class="back-home-btn">
-            <i class="fas fa-arrow-left"></i> 返回首页
+            <i class="fas fa-home"></i> 返回首页
         </a>
     </div>
     <header class="post-header">
@@ -106,7 +104,7 @@
 
 <div class="rock-kingdom-tools">
     <div class="tools-header">
-        <img src="https://cdn.pixabay.com/photo/2016/03/31/19/58/avatar-1295429_640.png" alt="洛克王国吉祥物" class="tools-icon">
+        <img src=" /images/avatar-1295429_640.webp" alt="洛克王国吉祥物" class="tools-icon">
         <h2>✨ 洛克王国 · 旅行者工具箱 ✨</h2>
         <p>宠物养成 | 对战模拟 | 资源地图 | 活动攻略</p>
     </div>
@@ -356,23 +354,24 @@ window.onclick = function(event) {
     </div>
 </div>
 
-<!-- 网易云音乐播放器（使用 MetingJS） -->
-
+<!-- 网易云音乐播放器（使用稳定 API 代理） -->
 <meting-js
     server="netease"
     type="playlist"
-    id="3778678"
-    theme="#ff6ec7"
-    autoplay="false"
-    list-folded="true"
-    preload="auto"
-    order="list"
-    volume="0.5"
+    id="17882023844"
     fixed="true"
-    mini="false"
-    >
+    autoplay="false"
+    theme="#ff6ec7"
+    loop="all"
+    order="list"
+    list-folded="true"
+    volume="0.5"
+    preload="auto"
+    api="https://meting-api.vercel.app/api">
 </meting-js>
 
+<!-- 看板娘（本地 live2d.js） -->
+<script src="/js/live2d.js"></script>
 
 <script>
     window.themeConfig = {
@@ -382,20 +381,5 @@ window.onclick = function(event) {
     };
 </script>
 <script src="/js/main.js"></script>
-<script src="/js/live2d.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
-<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
-<meting-js 
-    server="netease" 
-    type="playlist" 
-    id="17882023844" 
-    fixed="true" 
-    autoplay="false" 
-    theme="#ff6ec7"
-    loop="all"
-    order="list"
-    list-folded="true">
-</meting-js>
 </body>
 </html>
