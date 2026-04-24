@@ -28,7 +28,7 @@
         <img class="hero-img" src="/images/header.jpg" alt="头图">
     </div>
 
-    <!-- 头像区域（居中） -->
+    <!-- 头像区域（左对齐） -->
     <div class="profile-container">
         <div class="avatar-wrapper">
             <img id="profileAvatar" class="rotating-avatar" src="/images/avatar.png" alt="头像">
@@ -153,30 +153,28 @@
         border="0" 
         marginwidth="0" 
         marginheight="0" 
-        width="310" 
-        height="110" 
+        width="330" 
+        height="90" 
         src="https://music.163.com/outchain/player?type=0&id=17882023844&auto=0&height=90">
     </iframe>
 </div>
 
-<!-- 看板娘（使用 letere-gzj/live2d-widget-v3，模型资源指向自己的 CDN） -->
+<!-- 看板娘（使用您自己的 CDN 模型资源） -->
 <script>
-  // 自己的模型 CDN 地址
-  const myCdnPath = "https://cdn.jsdelivr.net/gh/LongBai585/static-resource/@v1.0.0";
-  // 原组件 CDN（用于其它资源）
-  const originalCdnPath = "https://cdn.jsdelivr.net/gh/letere-gzj/live2d-widget-v3@main";
+  // 使用您自己的 CDN 地址（模型文件已上传）
+  const myCdnPath = "https://cdn.jsdelivr.net/gh/LongBai585/static-resource@v1.0.0";
   
   const config = {
     path: {
       homePath: "/",
-      // 模型资源路径改为你自己的 CDN 地址
+      // 模型资源路径改为您自己的 CDN 地址
       modelPath: myCdnPath + "/",
-      // 以下资源仍使用原组件的 CDN（也可替换为自己本地的，但需确保文件存在）
-      cssPath: originalCdnPath + "/waifu.css",
-      tipsJsonPath: originalCdnPath + "/waifu-tips.json",
-      tipsJsPath: originalCdnPath + "/waifu-tips.js",
-      live2dCorePath: originalCdnPath + "/Core/live2dcubismcore.js",
-      live2dSdkPath: originalCdnPath + "/live2d-sdk.js"
+      // 以下资源仍使用原组件的 CDN（也可替换为自己本地的，但需要自行下载）
+      cssPath: "https://cdn.jsdelivr.net/gh/letere-gzj/live2d-widget-v3@main/waifu.css",
+      tipsJsonPath: "https://cdn.jsdelivr.net/gh/letere-gzj/live2d-widget-v3@main/waifu-tips.json",
+      tipsJsPath: "https://cdn.jsdelivr.net/gh/letere-gzj/live2d-widget-v3@main/waifu-tips.js",
+      live2dCorePath: "https://cdn.jsdelivr.net/gh/letere-gzj/live2d-widget-v3@main/Core/live2dcubismcore.js",
+      live2dSdkPath: "https://cdn.jsdelivr.net/gh/letere-gzj/live2d-widget-v3@main/live2d-sdk.js"
     },
     tools: ["hitokoto", "asteroids", "express", "switch-model", "switch-texture", "photo", "info", "quit"],
     drag: { enable: true, direction: ["x", "y"] },
@@ -212,7 +210,7 @@
     ]).then(() => {
       initWidget({
         waifuPath: config.path.tipsJsonPath,
-        cdnPath: config.path.modelPath,   // 模型路径指向你自己的 CDN
+        cdnPath: config.path.modelPath,
         tools: config.tools,
         dragEnable: config.drag.enable,
         dragDirection: config.drag.direction,
