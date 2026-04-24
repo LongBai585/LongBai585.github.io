@@ -49,7 +49,7 @@ if (typeContainer) {
 
 // ========== 头像加载 ==========
 const avatarImg = document.getElementById('profileAvatar');
-if (avatarImg && window.themeConfig && window.themeConfig.avatarDefault) {
+if (avatarImg && window.themeConfig.avatarDefault) {
     const storedAvatar = localStorage.getItem('blog_avatar_custom');
     const avatarUrl = storedAvatar || window.themeConfig.avatarDefault;
     avatarImg.src = avatarUrl;
@@ -105,7 +105,7 @@ if (timeDiv) {
     };
 
     const onStart = (e) => {
-        if (e.target.closest('iframe')) return; // 避免拖拽影响点击按钮
+        if (e.target.closest('iframe')) return;
         isDragging = true;
         startX = e.clientX;
         startY = e.clientY;
