@@ -386,11 +386,12 @@ body {
     margin: 0 4px;
 }
 
+/* 音乐播放器容器（可拖拽） */
 .official-player-wrapper {
     position: fixed;
-    bottom: 40px;
+    bottom: 20px;
     right: 20px;
-    z-index: 1002;
+    z-index: 1000;
     background: rgba(255, 245, 235, 0.9);
     backdrop-filter: blur(8px);
     border-radius: 60px;
@@ -410,6 +411,7 @@ body {
     pointer-events: auto;
 }
 
+/* 移动端适配 */
 @media (max-width: 650px) {
     .hero-image-wrapper { height: 200px; }
     .content-container { padding: 1rem; }
@@ -417,7 +419,13 @@ body {
     .post-date-large { width: auto; display: inline-block; }
     .stats-grid { flex-wrap: wrap; justify-content: center; }
     .wave { height: 60px; background-size: 150px 60px; }
-    .official-player-wrapper { transform: scale(0.85); transform-origin: bottom right; bottom: 10px; right: 10px; padding: 4px 8px; }
+    .official-player-wrapper {
+        transform: scale(0.85);
+        transform-origin: bottom right;
+        bottom: 10px;
+        right: 10px;
+        padding: 4px 8px;
+    }
 }
 
 footer {
@@ -437,10 +445,12 @@ footer {
     color: #e67e22;
 }
 
-/* 看板娘位置微调 */
+/* ===== 新看板娘 (letere-gzj/live2d-widget-v3) 默认样式无需覆盖，仅调整位置（可选） ===== */
+/* 注：新看板娘自动生成 .waifu 容器，默认位于右下角。若需调整位置可取消注释以下代码 */
+/*
 .waifu {
     bottom: 100px !important;
-    left: 20px !important;
-    right: auto !important;
-    z-index: 1001;
+    right: 20px !important;
+    left: auto !important;
 }
+*/

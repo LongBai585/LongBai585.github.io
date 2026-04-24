@@ -27,6 +27,7 @@
 <div class="page-transition"></div>
 
 <div class="site-wrapper">
+    <!-- 头图区域 + 波浪 -->
     <div class="hero-header">
         <div class="hero-image-wrapper">
             <img class="hero-img" src="/images/header.jpg" alt="头图">
@@ -358,98 +359,69 @@ window.onclick = function(event) {
         marginwidth="0" 
         marginheight="0" 
         width="330" 
-        height="100" 
+        height="90" 
         src="https://music.163.com/outchain/player?type=0&id=17882023844&auto=0&height=90">
     </iframe>
 </div>
 
-<!-- 看板娘（使用 live2d-renderer，轻量且可靠） -->
-<link rel="stylesheet" href="/css/waifu.min.css">
-<script src="/js/live2dcubismcore.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/live2d-renderer@1.0.4/dist/live2d-renderer.min.js"></script>
-
-<div id="live2d-container" style="position: fixed; bottom: 20px; left: 20px; width: 300px; height: 400px; z-index: 1000; background: transparent;"></div>
-
+<!-- ===== 新的看板娘方案（使用 letere-gzj/live2d-widget-v3 CDN） ===== -->
 <script>
-    (function() {
-        const container = document.getElementById('live2d-container');
-        if (!container) return;
-        
-        // 确保 Live2DRenderer 存在
-        if (typeof Live2DRenderer === 'undefined') {
-            console.error('live2d-renderer 未加载');
-            container.innerHTML = '<div style="color:#999; font-size:12px; text-align:center; margin-top:180px;">渲染器加载失败</div>';
-            return;
-        }
-        
-        // 模型路径
-        const modelPath = '/live2d_models/jian_3/jian_3.model3.json';
-        
-        // 初始化渲染器
-        const renderer = new Live2DRenderer(container, {
-            width: 300,
-            height: 400,
-            transparent: true,
-            devicePixelRatio: window.devicePixelRatio || 1
-        });
-        
-        // 加载模型
-        renderer.loadModel(modelPath)
-            .then(model => {
-                console.log('模型加载成功');
-                // 设置模型大小和位置
-                model.setTransform({
-                    x: 150,
-                    y: 300,
-                    scaleX: 0.2,
-                    scaleY: 0.2
-                });
-                
-                // 播放默认动作（如果有 idle 动作）
-                if (model.motions && model.motions.idle && model.motions.idle.length) {
-                    model.motions.idle[0].play();
-                } else if (model.motions && Object.keys(model.motions).length) {
-                    // 播放第一个动作
-                    const firstGroup = Object.keys(model.motions)[0];
-                    if (model.motions[firstGroup] && model.motions[firstGroup].length) {
-                        model.motions[firstGroup][0].play();
-                    }
-                }
-                
-                // 鼠标跟随（视线、角度）
-                let lastX = 0, lastY = 0;
-                container.addEventListener('mousemove', (e) => {
-                    const rect = container.getBoundingClientRect();
-                    const x = (e.clientX - rect.left) / rect.width - 0.5;
-                    const y = (e.clientY - rect.top) / rect.height - 0.5;
-                    // 平滑移动
-                    lastX = lastX * 0.7 + x * 0.3;
-                    lastY = lastY * 0.7 + y * 0.3;
-                    model.setParam('ParamAngleX', lastX * 30);
-                    model.setParam('ParamAngleY', -lastY * 30);
-                    model.setParam('ParamEyeBallX', lastX);
-                    model.setParam('ParamEyeBallY', -lastY);
-                });
-                
-                // 点击随机播放动作
-                container.addEventListener('click', () => {
-                    if (!model.motions) return;
-                    const groups = Object.keys(model.motions);
-                    if (groups.length) {
-                        const randomGroup = groups[Math.floor(Math.random() * groups.length)];
-                        const motions = model.motions[randomGroup];
-                        if (motions && motions.length) {
-                            const randomMotion = motions[Math.floor(Math.random() * motions.length)];
-                            randomMotion.play();
-                        }
-                    }
-                });
-            })
-            .catch(err => {
-                console.error('模型加载失败', err);
-                container.innerHTML = '<div style="color:#999; font-size:12px; text-align:center; margin-top:180px;">模型加载失败<br>请检查路径</div>';
-            });
-    })();
+  const cdnPath = "https://cdn.jsdelivr.net/gh/letere-gzj/live2d-widget-v3@main";
+  const config = {
+    path: {
+      homePath: "/",
+      modelPath: cdnPath + "/Resources/",
+      cssPath: cdnPath + "/waifu.css",
+      tipsJsonPath: cdnPath + "/waifu-tips.json",
+      tipsJsPath: cdnPath + "/waifu-tips.js",
+      live2dCorePath: cdnPath + "/Core/live2dcubismcore.js",
+      live2dSdkPath: cdnPath + "/live2d-sdk.js"
+    },
+    tools: ["hitokoto", "asteroids", "express", "switch-model", "switch-texture", "photo", "info", "quit"],
+    drag: {
+      enable: true,
+      direction: ["x", "y"]
+    },
+    switchType: "order"
+  }
+
+  function loadExternalResource(url, type) {
+    return new Promise((resolve, reject) => {
+      let tag;
+      if (type === "css") {
+        tag = document.createElement("link");
+        tag.rel = "stylesheet";
+        tag.href = url;
+      }
+      else if (type === "js") {
+        tag = document.createElement("script");
+        tag.src = url;
+      }
+      if (tag) {
+        tag.onload = () => resolve(url);
+        tag.onerror = () => reject(url);
+        document.head.appendChild(tag);
+      }
+    });
+  }
+
+  if (screen.width >= 768) {
+    Promise.all([
+      loadExternalResource(config.path.cssPath, "css"),
+      loadExternalResource(config.path.live2dCorePath, "js"),
+      loadExternalResource(config.path.live2dSdkPath, "js"),
+      loadExternalResource(config.path.tipsJsPath, "js")
+    ]).then(() => {
+      initWidget({
+        waifuPath: config.path.tipsJsonPath,
+        cdnPath: config.path.modelPath,
+        tools: config.tools,
+        dragEnable: config.drag.enable,
+        dragDirection: config.drag.direction,
+        switchType: config.switchType
+      });
+    });
+  }
 </script>
 
 <script>
