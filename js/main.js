@@ -72,7 +72,7 @@ function fetchStats() {
     const startDate = new Date(2024, 3, 5);
     const diffDays = Math.floor((Date.now() - startDate) / (1000 * 60 * 60 * 24));
     document.getElementById('runDays').innerText = diffDays;
-    document.getElementById('lastUpdate').innerText = '2026-04-18';
+    document.getElementById('lastUpdate').innerText = '2026-04-25';
 }
 fetchStats();
 

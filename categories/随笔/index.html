@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Hexo | 二次元幻境</title>
+    <title>Hexo | 二次元·幻境</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/css/style.css">
@@ -22,55 +22,63 @@
 <meta name="generator" content="Hexo 8.1.1"></head>
 <body>
 <div class="site-wrapper">
-    <div class="hero-banner">
-        <img class="hero-img" src="/images/header.jpg" alt="头图">
-    </div>
-    <div class="profile-container">
-        <div class="avatar-wrapper">
-            <img id="profileAvatar" class="rotating-avatar" src="/images/avatar.png" alt="头像">
+    <div class="hero-header">
+        <div class="hero-image-wrapper">
+            <img class="hero-img" src="/images/header.jpg" alt="头图">
+            <div class="wave" id="wave1"></div>
+            <div class="wave" id="wave2"></div>
+            <div class="wave" id="wave3"></div>
+            <div class="wave" id="wave4"></div>
         </div>
-        <div class="blog-info">
+        <div class="profile-avatar">
+            <div class="avatar-wrapper">
+                <img id="profileAvatar" class="rotating-avatar" src="/images/avatar.png" alt="头像">
+            </div>
+        </div>
+    </div>
+
+    <div class="content-container">
+        <div class="blog-info-header">
             <h1 class="blog-title">汐音_Shione</h1>
             <div class="blog-subtitle">特別なことばかりで、君がいる十分です。</div>
             <div class="blog-desc">记录开发故事，探寻开发过程</div>
             <div class="signature">✎ 一期一会，步履不停</div>
         </div>
-    </div>
-    <div class="stats-grid">
-        <div class="stat-item"><i class="fas fa-file-alt"></i> <span id="postCount">0</span> <span>記事</span></div>
-        <div class="stat-item"><i class="fas fa-folder"></i> <span id="categoryCount">0</span> <span>カテゴリー</span></div>
-        <div class="stat-item"><i class="fas fa-tags"></i> <span id="tagCount">0</span> <span>タグ</span></div>
-        <div class="stat-item"><i class="fas fa-calendar-day"></i> <span id="runDays">0</span> <span>運用日数</span></div>
-        <div class="stat-item"><i class="fas fa-sync-alt"></i> <span id="lastUpdate">—</span> <span>最終更新</span></div>
-    </div>
-    <div class="notice-bar">
-        <i class="fas fa-bell"></i>
-        <span>✨ 欢迎来到二次元幻境 | 音乐陪伴每一刻 ✨</span>
-    </div>
-    <div class="time-ticker">
-        <div class="live-time" id="liveClock"></div>
-        <div class="scroll-area">
-            <div class="scroll-content" id="scrollText"></div>
+
+        <div class="stats-grid">
+            <div class="stat-item"><i class="fas fa-file-alt"></i> <span id="postCount">0</span> <span>記事</span></div>
+            <div class="stat-item"><i class="fas fa-folder"></i> <span id="categoryCount">0</span> <span>カテゴリー</span></div>
+            <div class="stat-item"><i class="fas fa-tags"></i> <span id="tagCount">0</span> <span>タグ</span></div>
+            <div class="stat-item"><i class="fas fa-calendar-day"></i> <span id="runDays">0</span> <span>運用日数</span></div>
+            <div class="stat-item"><i class="fas fa-sync-alt"></i> <span id="lastUpdate">—</span> <span>最終更新</span></div>
         </div>
-    </div>
-    <div class="content-container">
-        <div class="post-list">
+
+        <div class="notice-bar">
+            <i class="fas fa-bell"></i>
+            <span>✨ 欢迎来到二次元幻境 | 音乐陪伴每一刻 ✨</span>
+        </div>
+
+        <div class="time-ticker">
+            <div class="live-time" id="liveClock"></div>
+            <div class="scroll-area">
+                <div class="scroll-content" id="scrollText"></div>
+            </div>
+        </div>
+
+        <div class="content-container">
+            <div class="post-list">
     
         
             <div class="post-item">
                 <div class="post-date-large">
-                    <span class="post-day">05</span>
-                    <span class="post-month">Apr</span>
+                    <span class="post-day">01</span>
+                    <span class="post-month">APR</span>
                 </div>
                 <div class="post-content-right">
                     <h2 class="post-title"><a href="/2026/04/05/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%97%A5%E5%BF%97/">泷白</a></h2>
-                    <div class="post-excerpt">
-                        
-                            &lt;p&gt;你好，我是 泷白。一个喜欢二次元的开发小白，正在努力学习 C# 和 PLC。&lt;/p&gt;
-                        
-                    </div>
+                    <div class="post-excerpt">你好，我是 泷白。一个喜欢二次元的开发小白，正在努力学习 C# 和 PLC。</div>
                     <a href="/2026/04/05/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%97%A5%E5%BF%97/" class="read-more-link">
-                        <i class="fas fa-chevron-circle-right"></i> 阅读更多
+                        <i class="fas fa-user"></i> 关于我
                     </a>
                 </div>
             </div>
@@ -78,43 +86,52 @@
     
 </div>
 
+
+        </div>
+
+        <footer>
+            <div class="footer-social">
+                
+                    <a href="https://github.com/LongBai585" target="_blank"><i class="fab fa-github"></i></a>
+                
+                
+                    <a href="mailto:ym.yxzs.yllb.@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
+                
+            </div>
+            <div class="footer-text">
+                <i class="fas fa-music"></i> 夢とコードの狭間で  |  © 泷白 カンタルの部屋 | v440
+            </div>
+        </footer>
     </div>
-    <footer>
-        <div class="footer-social">
-            
-                <a href="https://github.com/LongBai585" target="_blank"><i class="fab fa-github"></i></a>
-            
-            
-                <a href="mailto:ym.yxzs.yllb.@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
-            
-        </div>
-        <div class="footer-text">
-            <i class="fas fa-music"></i> 夢とコードの狭間で  |  © 泷白 二次元幻境 | v440
-        </div>
-    </footer>
 </div>
 
+<!-- 可拖拽的网易云官方播放器 -->
 <div class="official-player-wrapper" id="officialPlayer">
-    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="300" height="120" src="https://music.163.com/outchain/player?type=0&id=17882023844&auto=0&height=90"></iframe>
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="320" height="110" src="https://music.163.com/outchain/player?type=0&id=17882023844&auto=0&height=80"></iframe>
 </div>
 
+<!-- ========== 看板娘（官方核心库 + 您的模型和样式） ========== -->
 <script>
-  const myCdnPath = "https://cdn.jsdelivr.net/gh/LongBai585/static-resource@v1.0.0";
-  const originalCdnPath = "https://cdn.jsdelivr.net/gh/letere-gzj/live2d-widget-v3@main";
+  // 官方 CDN（核心库）
+  const officialCdn = "https://cdn.jsdelivr.net/gh/letere-gzj/live2d-widget-v3@main";
+  // 您自己的 CDN（模型和样式）
+  const myCdn = "https://cdn.jsdelivr.net/gh/LongBai585/static-resource@v1.1.3";
+
   const config = {
     path: {
       homePath: "/",
-      modelPath: myCdnPath + "/",
-      cssPath: originalCdnPath + "/waifu.css",
-      tipsJsonPath: originalCdnPath + "/waifu-tips.json",
-      tipsJsPath: originalCdnPath + "/waifu-tips.js",
-      live2dCorePath: originalCdnPath + "/Core/live2dcubismcore.js",
-      live2dSdkPath: originalCdnPath + "/live2d-sdk.js"
+      modelPath: myCdn + "/",                     // 模型根目录（含 model_list.json 和 model/ 文件夹）
+      cssPath: myCdn + "/waifu.css",
+      tipsJsonPath: officialCdn + "/waifu-tips.json",
+      tipsJsPath: officialCdn + "/waifu-tips.js",
+      live2dCorePath: officialCdn + "/Core/live2dcubismcore.js",
+      live2dSdkPath: officialCdn + "/live2d-sdk.js"
     },
     tools: ["hitokoto", "asteroids", "express", "switch-model", "switch-texture", "photo", "info", "quit"],
     drag: { enable: true, direction: ["x", "y"] },
     switchType: "order"
   };
+
   function loadExternalResource(url, type) {
     return new Promise((resolve, reject) => {
       let tag;
@@ -133,6 +150,7 @@
       }
     });
   }
+
   if (screen.width >= 768) {
     Promise.all([
       loadExternalResource(config.path.cssPath, "css"),
