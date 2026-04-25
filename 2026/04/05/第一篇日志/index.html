@@ -6,7 +6,6 @@
     <title>Hexo | 二次元幻境</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
     <link rel="stylesheet" href="/css/style.css">
     <style>
         :root {
@@ -23,12 +22,9 @@
 <meta name="generator" content="Hexo 8.1.1"></head>
 <body>
 <div class="site-wrapper">
-    <!-- 头图区域 -->
     <div class="hero-banner">
         <img class="hero-img" src="/images/header.jpg" alt="头图">
     </div>
-
-    <!-- 头像区域（左对齐） -->
     <div class="profile-container">
         <div class="avatar-wrapper">
             <img id="profileAvatar" class="rotating-avatar" src="/images/avatar.png" alt="头像">
@@ -40,8 +36,6 @@
             <div class="signature">✎ 一期一会，步履不停</div>
         </div>
     </div>
-
-    <!-- 统计卡片（网格） -->
     <div class="stats-grid">
         <div class="stat-item"><i class="fas fa-file-alt"></i> <span id="postCount">0</span> <span>記事</span></div>
         <div class="stat-item"><i class="fas fa-folder"></i> <span id="categoryCount">0</span> <span>カテゴリー</span></div>
@@ -49,22 +43,16 @@
         <div class="stat-item"><i class="fas fa-calendar-day"></i> <span id="runDays">0</span> <span>運用日数</span></div>
         <div class="stat-item"><i class="fas fa-sync-alt"></i> <span id="lastUpdate">—</span> <span>最終更新</span></div>
     </div>
-
-    <!-- 通知栏（简短公告） -->
     <div class="notice-bar">
         <i class="fas fa-bell"></i>
         <span>✨ 欢迎来到二次元幻境 | 音乐陪伴每一刻 ✨</span>
     </div>
-
-    <!-- 时间 + 打字机 -->
     <div class="time-ticker">
         <div class="live-time" id="liveClock"></div>
         <div class="scroll-area">
             <div class="scroll-content" id="scrollText"></div>
         </div>
     </div>
-
-    <!-- 文章主体内容 -->
     <div class="content-container">
         <article class="post-full">
     <div class="post-nav">
@@ -129,8 +117,6 @@
     </footer>
 </article>
     </div>
-
-    <!-- 页脚 -->
     <footer>
         <div class="footer-social">
             
@@ -146,41 +132,27 @@
     </footer>
 </div>
 
-<!-- 网易云音乐播放器（可拖拽） -->
 <div class="official-player-wrapper" id="officialPlayer">
-    <iframe 
-        frameborder="no" 
-        border="0" 
-        marginwidth="0" 
-        marginheight="0" 
-        width="330" 
-        height="90" 
-        src="https://music.163.com/outchain/player?type=0&id=17882023844&auto=0&height=90">
-    </iframe>
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="300" height="120" src="https://music.163.com/outchain/player?type=0&id=17882023844&auto=0&height=90"></iframe>
 </div>
 
-<!-- 看板娘（使用您自己的 CDN 模型资源） -->
 <script>
-  // 使用您自己的 CDN 地址（模型文件已上传）
   const myCdnPath = "https://cdn.jsdelivr.net/gh/LongBai585/static-resource@v1.0.0";
-  
+  const originalCdnPath = "https://cdn.jsdelivr.net/gh/letere-gzj/live2d-widget-v3@main";
   const config = {
     path: {
       homePath: "/",
-      // 模型资源路径改为您自己的 CDN 地址
       modelPath: myCdnPath + "/",
-      // 以下资源仍使用原组件的 CDN（也可替换为自己本地的，但需要自行下载）
-      cssPath: "https://cdn.jsdelivr.net/gh/letere-gzj/live2d-widget-v3@main/waifu.css",
-      tipsJsonPath: "https://cdn.jsdelivr.net/gh/letere-gzj/live2d-widget-v3@main/waifu-tips.json",
-      tipsJsPath: "https://cdn.jsdelivr.net/gh/letere-gzj/live2d-widget-v3@main/waifu-tips.js",
-      live2dCorePath: "https://cdn.jsdelivr.net/gh/letere-gzj/live2d-widget-v3@main/Core/live2dcubismcore.js",
-      live2dSdkPath: "https://cdn.jsdelivr.net/gh/letere-gzj/live2d-widget-v3@main/live2d-sdk.js"
+      cssPath: originalCdnPath + "/waifu.css",
+      tipsJsonPath: originalCdnPath + "/waifu-tips.json",
+      tipsJsPath: originalCdnPath + "/waifu-tips.js",
+      live2dCorePath: originalCdnPath + "/Core/live2dcubismcore.js",
+      live2dSdkPath: originalCdnPath + "/live2d-sdk.js"
     },
     tools: ["hitokoto", "asteroids", "express", "switch-model", "switch-texture", "photo", "info", "quit"],
     drag: { enable: true, direction: ["x", "y"] },
     switchType: "order"
   };
-
   function loadExternalResource(url, type) {
     return new Promise((resolve, reject) => {
       let tag;
@@ -188,8 +160,7 @@
         tag = document.createElement("link");
         tag.rel = "stylesheet";
         tag.href = url;
-      }
-      else if (type === "js") {
+      } else if (type === "js") {
         tag = document.createElement("script");
         tag.src = url;
       }
@@ -200,7 +171,6 @@
       }
     });
   }
-
   if (screen.width >= 768) {
     Promise.all([
       loadExternalResource(config.path.cssPath, "css"),
@@ -221,11 +191,7 @@
 </script>
 
 <script>
-    window.themeConfig = {
-        avatarDefault: "/images/avatar.png",
-        avatarSpeed: "8s",
-        customIcon: "/images/custom-icon.png"
-    };
+    window.themeConfig = { avatarDefault: "/images/avatar.png", avatarSpeed: "8s", customIcon: "/images/custom-icon.png" };
 </script>
 <script src="/js/main.js"></script>
 </body>
