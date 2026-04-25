@@ -124,18 +124,18 @@
     <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="320" height="110" src="https://music.163.com/outchain/player?type=0&id=17882023844&auto=0&height=80"></iframe>
 </div>
 
-<!-- ========== 看板娘（官方核心库 + 您的模型和样式） ========== -->
+<!-- ========== 看板娘（官方核心库 + 您的模型） ========== -->
 <script>
-  // 官方 CDN（核心库）
+  // 官方 CDN（所有核心资源）
   const officialCdn = "https://cdn.jsdelivr.net/gh/letere-gzj/live2d-widget-v3@main";
-  // 您自己的 CDN（模型和样式）
-  const myCdn = "https://cdn.jsdelivr.net/gh/LongBai585/static-resource@v1.1.2";
+  // 您自己的 CDN（只需存放 model 文件夹和 model_list.json）
+  const myModelCdn = "https://cdn.jsdelivr.net/gh/LongBai585/static-resource@v1.1.2";
 
   const config = {
     path: {
       homePath: "/",
-      modelPath: myCdn + "/",                     // 模型根目录（含 model_list.json 和 model/ 文件夹）
-      cssPath: myCdn + "/waifu.css",
+      modelPath: myModelCdn + "/",                 // 模型根目录（包含 model_list.json 和 model/）
+      cssPath: officialCdn + "/waifu.css",
       tipsJsonPath: officialCdn + "/waifu-tips.json",
       tipsJsPath: officialCdn + "/waifu-tips.js",
       live2dCorePath: officialCdn + "/Core/live2dcubismcore.js",
