@@ -39,7 +39,6 @@
 
     <div class="content-container">
         <div class="blog-info-header">
-            <!-- 博客主标题 -->
             <h1 class="blog-title">二次元·幻境</h1>
             <div class="blog-subtitle">特別なことばかりで、君がいる十分です。</div>
             <div class="blog-desc">记录开发故事，探寻开发过程</div>
@@ -114,102 +113,235 @@
                 
             </div>
             <div class="footer-text">
-                <i class="fas fa-music"></i> 夢とコードの狭間で  |  © 泷白 二次元幻境 | v440
+                <i class="fas fa-music"></i> 夢とコードの狭間で  |  © 泷白 二次元·幻境 | v440
             </div>
         </footer>
     </div>
 </div>
 
-<!-- 可拖拽的网易云官方播放器：宽320 高110 -->
+<!-- 网易云播放器 320x110 -->
 <div class="official-player-wrapper" id="officialPlayer">
     <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="320" height="110" src="https://music.163.com/outchain/player?type=0&id=17882023844&auto=0&height=110"></iframe>
 </div>
 
-<!-- ========== 看板娘配置（模型路径 v1.1.6） ========== -->
+<!-- ========== 看板娘配置（官方核心库 + 你的模型） ========== -->
 <script>
-  // 官方 CDN（核心库、样式、提示等）
-  const officialCdn = "https://cdn.jsdelivr.net/gh/letere-gzj/live2d-widget-v3@main";
-  // 你的模型仓库 CDN，指向 v1.1.6（请确保该版本已包含完整的 model/ 文件夹和 model_list.json）
-  const myCdn = "https://cdn.jsdelivr.net/gh/LongBai585/static-resource@v1.1.6";
+  (function() {
+    // 你自己的模型 CDN 版本（请确保模型文件完整）
+    const MY_VERSION = "v1.1.7";
+    const officialCdn = "https://cdn.jsdelivr.net/gh/letere-gzj/live2d-widget-v3@main";
+    const myCdn = `https://cdn.jsdelivr.net/gh/LongBai585/static-resource@${MY_VERSION}`;
 
-  const config = {
-    path: {
-      homePath: "/",
-      modelPath: myCdn + "/",                     // 模型根目录（model_list.json 和 model/ 在此下）
-      cssPath: officialCdn + "/waifu.css",
-      tipsJsonPath: officialCdn + "/waifu-tips.json",
-      tipsJsPath: officialCdn + "/waifu-tips.js",
-      live2dCorePath: officialCdn + "/Core/live2dcubismcore.js",
-      live2dSdkPath: officialCdn + "/live2d-sdk.js"
-    },
-    tools: ["hitokoto", "asteroids", "express", "switch-model", "switch-texture", "photo", "info", "quit"],
-    drag: { enable: true, direction: ["x", "y"] },
-    switchType: "order"
-  };
+    const config = {
+      path: {
+        homePath: "/",
+        modelPath: myCdn + "/",
+        cssPath: officialCdn + "/waifu.css",
+        tipsJsonPath: officialCdn + "/waifu-tips.json",
+        tipsJsPath: officialCdn + "/waifu-tips.js",
+        live2dCorePath: officialCdn + "/Core/live2dcubismcore.js",
+        live2dSdkPath: officialCdn + "/live2d-sdk.js"
+      },
+      tools: ["hitokoto", "asteroids", "express", "switch-model", "switch-texture", "photo", "info", "quit"],
+      drag: { enable: true, direction: ["x", "y"] },
+      switchType: "order"
+    };
 
-  function loadExternalResource(url, type) {
-    return new Promise((resolve, reject) => {
-      let tag;
-      if (type === "css") {
-        tag = document.createElement("link");
-        tag.rel = "stylesheet";
-        tag.href = url;
-      } else if (type === "js") {
-        tag = document.createElement("script");
-        tag.src = url;
+    function loadResource(url, type) {
+      return new Promise((resolve, reject) => {
+        let tag;
+        if (type === "css") {
+          tag = document.createElement("link");
+          tag.rel = "stylesheet";
+          tag.href = url;
+        } else if (type === "js") {
+          tag = document.createElement("script");
+          tag.src = url;
+        }
+        if (tag) {
+          tag.onload = () => resolve(url);
+          tag.onerror = () => reject(url);
+          document.head.appendChild(tag);
+        }
+      });
+    }
+
+    // 预检模型配置（仅用于控制台调试）
+    async function validateModels() {
+      try {
+        const res = await fetch(config.path.modelPath + "model_list.json");
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const models = await res.json();
+        console.log(`[Live2D] model_list.json 加载成功，共 ${models.length} 个模型`);
+        let validCount = 0;
+        for (const model of models) {
+          const modelJsonUrl = config.path.modelPath + model.path;
+          try {
+            const jsonRes = await fetch(modelJsonUrl);
+            if (!jsonRes.ok) {
+              console.error(`❌ 模型 "${model.name}" 配置文件不可用: ${modelJsonUrl} (${jsonRes.status})`);
+              continue;
+            }
+            const json = await jsonRes.json();
+            const mocFile = json.FileReferences?.Moc;
+            if (!mocFile) {
+              console.error(`❌ 模型 "${model.name}" 未指定 Moc 文件`);
+              continue;
+            }
+            const baseDir = modelJsonUrl.substring(0, modelJsonUrl.lastIndexOf('/') + 1);
+            const mocUrl = baseDir + mocFile;
+            const mocRes = await fetch(mocUrl, { method: 'HEAD' });
+            if (mocRes.ok) {
+              console.log(`✅ 模型 "${model.name}" 的 .moc3 文件存在`);
+              validCount++;
+            } else {
+              console.error(`❌ 模型 "${model.name}" 缺少 .moc3 文件: ${mocUrl}`);
+            }
+          } catch (err) {
+            console.error(`❌ 检查模型 "${model.name}" 出错:`, err);
+          }
+        }
+        console.log(`[Live2D] 有效模型: ${validCount}/${models.length}`);
+        return validCount > 0;
+      } catch (e) {
+        console.error("[Live2D] model_list.json 加载失败:", e);
+        return false;
       }
-      if (tag) {
-        tag.onload = () => resolve(url);
-        tag.onerror = () => reject(url);
-        document.head.appendChild(tag);
-      }
-    });
-  }
+    }
 
-  // 预检 model_list.json 是否可访问
-  async function checkModelList() {
-    try {
-      const res = await fetch(config.path.modelPath + "model_list.json");
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
-      console.log("[Live2D] model_list.json 加载成功，模型数量:", data.length);
-      return true;
-    } catch (e) {
-      console.error("[Live2D] model_list.json 加载失败，请检查仓库内容:", e);
+    if (screen.width >= 768) {
+      validateModels().then(hasValidModels => {
+        if (!hasValidModels) {
+          console.warn("[Live2D] 没有有效模型，看板娘不加载");
+          return;
+        }
+        Promise.all([
+          loadResource(config.path.cssPath, "css"),
+          loadResource(config.path.live2dCorePath, "js"),
+          loadResource(config.path.live2dSdkPath, "js"),
+          loadResource(config.path.tipsJsPath, "js")
+        ]).then(() => {
+          if (typeof initWidget === "function") {
+            console.log("[Live2D] 初始化看板娘，模型路径:", config.path.modelPath);
+            initWidget({
+              waifuPath: config.path.tipsJsonPath,
+              cdnPath: config.path.modelPath,
+              tools: config.tools,
+              dragEnable: config.drag.enable,
+              dragDirection: config.drag.direction,
+              switchType: config.switchType
+            });
+          } else {
+            console.error("[Live2D] initWidget 未定义");
+          }
+        }).catch(err => {
+          console.error("[Live2D] 核心资源加载失败:", err);
+        });
+      });
+    }
+  })();
+</script>
+
+<!-- ========== 水印切换功能（电脑 Ctrl+M，手机双击画布） ========== -->
+<script>
+  (function() {
+    // 水印参数名称（请根据你的模型修改，常见: ParamWatermark, ParamLogo, ParamMark）
+    const WATERMARK_PARAM = "ParamWatermark";
+    let watermarkState = 1;   // 1=显示水印, 0=隐藏（假设如此）
+
+    // 尝试设置模型参数
+    function setWatermarkParam(value) {
+      // 方法1: 通过 window.live2d 接口
+      if (window.live2d && typeof window.live2d.setParameter === 'function') {
+        window.live2d.setParameter(WATERMARK_PARAM, value);
+        return true;
+      }
+      // 方法2: 通过 canvas 上的模型实例
+      const canvas = document.getElementById('live2d');
+      if (canvas && canvas.live2dModel && typeof canvas.live2dModel.setParameterValue === 'function') {
+        canvas.live2dModel.setParameterValue(WATERMARK_PARAM, value);
+        return true;
+      }
       return false;
     }
-  }
 
-  // 仅在桌面端（屏幕宽度 ≥ 768px）加载看板娘
-  if (screen.width >= 768) {
-    checkModelList().then(ok => {
-      if (!ok) {
-        console.warn("[Live2D] 模型配置无效，跳过加载");
+    function toggleWatermark() {
+      const newValue = watermarkState === 1 ? 0 : 1;
+      const success = setWatermarkParam(newValue);
+      if (success) {
+        watermarkState = newValue;
+        if (typeof showMessage === 'function') {
+          showMessage(watermarkState === 1 ? '💧 水印已显示' : '✨ 水印已隐藏', 2000);
+        } else {
+          console.log(`[Watermark] 参数 ${WATERMARK_PARAM} 已设为 ${watermarkState}`);
+          alert(`水印已${watermarkState === 1 ? '显示' : '隐藏'}`);
+        }
+      } else {
+        if (typeof showMessage === 'function') {
+          showMessage('⚠️ 当前模型不支持水印参数切换', 2000);
+        } else {
+          alert('无法切换水印，请检查控制台');
+        }
+        console.warn(`[Watermark] 无法设置参数 ${WATERMARK_PARAM}`);
+      }
+    }
+
+    // ----- 电脑端：Ctrl+M -----
+    document.addEventListener('keydown', (e) => {
+      if (e.ctrlKey && e.key === 'm') {
+        e.preventDefault();
+        toggleWatermark();
+      }
+    });
+
+    // ----- 手机端：双击画布 -----
+    let lastTouchEnd = 0;
+    const canvas = document.getElementById('live2d');
+    if (canvas) {
+      canvas.addEventListener('touchend', (e) => {
+        const now = Date.now();
+        if (now - lastTouchEnd < 300) {
+          e.preventDefault();
+          toggleWatermark();
+        }
+        lastTouchEnd = now;
+      });
+    }
+
+    // 启动后 3 秒提示快捷键
+    setTimeout(() => {
+      if (typeof showMessage === 'function') {
+        showMessage('💡 电脑 Ctrl+M / 手机双击画布 可切换水印', 5000);
+      }
+    }, 3000);
+  })();
+</script>
+
+<!-- ========== 模型切换快捷键（改为 Ctrl+Shift+M，避免与水印冲突） ========== -->
+<script>
+  (function() {
+    function bindModelShortcut() {
+      if (typeof loadOtherModel !== 'function') {
+        setTimeout(bindModelShortcut, 100);
         return;
       }
-      Promise.all([
-        loadExternalResource(config.path.cssPath, "css"),
-        loadExternalResource(config.path.live2dCorePath, "js"),
-        loadExternalResource(config.path.live2dSdkPath, "js"),
-        loadExternalResource(config.path.tipsJsPath, "js")
-      ]).then(() => {
-        if (typeof initWidget === "function") {
-          initWidget({
-            waifuPath: config.path.tipsJsonPath,
-            cdnPath: config.path.modelPath,
-            tools: config.tools,
-            dragEnable: config.drag.enable,
-            dragDirection: config.drag.direction,
-            switchType: config.switchType
-          });
-        } else {
-          console.error("[Live2D] initWidget 未定义，可能官方库加载失败");
+      document.addEventListener('keydown', (e) => {
+        if (e.ctrlKey && e.shiftKey && e.key === 'm') {
+          e.preventDefault();
+          if (typeof showMessage === 'function') {
+            showMessage('✨ 切换模型 ✨', 2000);
+          }
+          loadOtherModel();
         }
-      }).catch(err => {
-        console.error("[Live2D] 核心资源加载失败:", err);
       });
-    });
-  }
+      console.log("[Live2D] 模型切换快捷键已绑定: Ctrl+Shift+M");
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bindModelShortcut);
+    } else {
+      bindModelShortcut();
+    }
+  })();
 </script>
 
 <script>
