@@ -2,29 +2,110 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Hexo | 二次元·幻境</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://api.hypcvgm.top">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/css/style.css">
     <style>
-        :root {
-            --primary: #ff6ec7;
-            --secondary: #66ccff;
-            --accent: #ffd700;
-            --bg1: #2b1b3a;
-            --bg2: #1a2a3a;
-            --bg3: #0f1a2a;
-            --text: #f0e6d0;
-            --avatar-speed: 8s;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: url('/images/bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Noto Sans SC', 'Quicksand', sans-serif;
+            color: #333;
+            line-height: 1.6;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.75);
+            z-index: -1;
+        }
+        .hero-img { width: 100%; height: auto; min-height: 120px; display: block; object-fit: cover; background: #eaeef2; }
+        .blog-container { max-width: 1280px; margin: 2rem auto; padding: 0 20px; display: flex; flex-wrap: wrap; gap: 2rem; }
+        .sidebar { flex: 1.2; min-width: 240px; background: rgba(255,255,255,0.92); border-radius: 28px; box-shadow: 0 8px 20px rgba(0,0,0,0.05); padding: 1.8rem 1.2rem; align-self: start; border: 1px solid rgba(255,255,255,0.5); backdrop-filter: blur(4px); }
+        .main-content { flex: 3; min-width: 260px; background: rgba(255,255,255,0.85); border-radius: 28px; padding: 1.5rem; backdrop-filter: blur(4px); box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
+        @media (max-width: 768px) {
+            .blog-container { flex-direction: column; padding: 0 16px; margin: 1rem auto; gap: 1rem; }
+            .sidebar { width: 100%; padding: 1rem; order: 1; }
+            .main-content { order: 2; width: 100%; padding: 1rem; overflow-x: hidden; }
+            .main-content pre, .main-content code, .main-content .highlight pre { white-space: pre-wrap !important; word-break: break-word !important; overflow-x: auto !important; max-width: 100%; display: block; background: #f4f4f4; padding: 0.5rem; border-radius: 8px; font-size: 0.85rem; }
+            .main-content pre { white-space: pre !important; overflow-x: auto; }
+            .main-content table { display: block; overflow-x: auto; white-space: nowrap; }
+            .main-content img, .main-content video, .main-content iframe { max-width: 100%; height: auto; }
+            #waifu { transform: scale(0.8); transform-origin: bottom right; right: -15px; bottom: -5px; }
+            .hero-img { width: 100% !important; display: block !important; min-height: 100px; }
+            .sidebar, .main-content { background: rgba(255,255,255,0.95); backdrop-filter: blur(2px); }
+        }
+        .main-content pre, .main-content code, .main-content .highlight pre { white-space: pre-wrap; word-wrap: break-word; overflow-x: auto; max-width: 100%; background: #f4f4f4; padding: 0.5rem; border-radius: 8px; }
+        .main-content pre { overflow-x: auto; }
+        .main-content table { display: block; overflow-x: auto; }
+        .avatar-box { text-align: center; margin-bottom: 1.5rem; }
+        .avatar-img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; box-shadow: 0 8px 18px rgba(0,0,0,0.1); border: 2px solid white; }
+        .blog-name { font-size: 1.5rem; font-weight: 700; margin-top: 0.8rem; color: #2c3e50; }
+        .blog-bio { font-size: 0.85rem; color: #6c7a89; margin-top: 0.3rem; }
+        .stats-card { background: rgba(248,249,252,0.8); border-radius: 24px; padding: 1rem; margin: 1.5rem 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+        .stat-item { text-align: center; background: white; border-radius: 20px; padding: 0.6rem; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+        .stat-number { font-size: 1.3rem; font-weight: 700; color: #e74c3c; }
+        .stat-label { font-size: 0.7rem; color: #7f8c8d; }
+        .notice-bar { margin-top: 1rem; font-size: 0.85rem; }
+        .time-ticker { margin-top: 1rem; }
+        .main-content .read-more, .main-content a.read-more { display: inline-block; background: #e74c3c; color: white !important; padding: 6px 16px; border-radius: 30px; text-decoration: none; font-size: 0.85rem; margin-top: 12px; transition: 0.2s; }
+        .main-content .read-more:hover { background: #c0392b; transform: translateY(-1px); }
+        .home-button { display: inline-block; background: #2c3e50; color: white !important; padding: 8px 20px; border-radius: 40px; font-size: 0.9rem; text-decoration: none; margin-bottom: 1rem; transition: 0.2s; width: 100%; text-align: center; }
+        .home-button:hover { background: #1a252f; }
+        .back-to-top { position: fixed; bottom: 20px; right: 20px; width: 44px; height: 44px; background: #e74c3c; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 1001; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: all 0.3s; opacity: 0; visibility: hidden; }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: #c0392b; transform: scale(1.05); }
+        .floating-player { position: fixed; bottom: 80px; right: 20px; width: 340px; z-index: 1000; transition: all 0.3s ease; }
+        @media (max-width: 640px) { .floating-player { width: 280px; bottom: 70px; right: 10px; } }
+        .floating-player .netease-mini-player { width: 100%; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); background: rgba(255,255,255,0.96); backdrop-filter: blur(20px); }
+        @media (max-width: 640px) {
+            .floating-player .netease-mini-player .player-main { padding: 8px !important; }
+            .floating-player .netease-mini-player .cover-img { width: 60px !important; height: 60px !important; }
+            .floating-player .netease-mini-player .ctrl-btn { width: 32px !important; height: 32px !important; font-size: 1rem !important; }
+            .floating-player .netease-mini-player .play-pause { width: 40px !important; height: 40px !important; }
+            .floating-player .netease-mini-player .playlist-area { max-height: 200px; }
+        }
+        .waifu-loading { position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.6); color: white; padding: 6px 12px; border-radius: 20px; font-size: 12px; z-index: 999; pointer-events: none; opacity: 0; transition: opacity 0.3s; }
+        .waifu-loading.show { opacity: 1; }
+        .toggle-waifu-btn {
+            display: none;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-top: 1rem;
+            width: 100%;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .toggle-waifu-btn {
+                display: block;
+            }
+        }
+        .return-home {
+            margin-top: 1rem;
         }
     </style>
 <meta name="generator" content="Hexo 8.1.1"></head>
 <body>
+
 <div class="site-wrapper">
     <div class="hero-header">
         <div class="hero-image-wrapper">
-            <img class="hero-img" src="/images/header.jpg" alt="头图">
+            <img class="hero-img" src="/images/header.jpg" alt="头图" onerror="this.src='https://via.placeholder.com/1200x400?text=Header+Image'">
             <div class="wave" id="wave1"></div>
             <div class="wave" id="wave2"></div>
             <div class="wave" id="wave3"></div>
@@ -37,36 +118,33 @@
         </div>
     </div>
 
-    <div class="content-container">
-        <div class="blog-info-header">
-            <h1 class="blog-title">二次元·幻境</h1>
-            <div class="blog-subtitle">特別なことばかりで、君がいる十分です。</div>
-            <div class="blog-desc">记录开发故事，探寻开发过程</div>
-            <div class="signature">✎ 一期一会，步履不停</div>
-        </div>
-
-        <div class="stats-grid">
-            <div class="stat-item"><i class="fas fa-file-alt"></i> <span id="postCount">0</span> <span>記事</span></div>
-            <div class="stat-item"><i class="fas fa-folder"></i> <span id="categoryCount">0</span> <span>カテゴリー</span></div>
-            <div class="stat-item"><i class="fas fa-tags"></i> <span id="tagCount">0</span> <span>タグ</span></div>
-            <div class="stat-item"><i class="fas fa-calendar-day"></i> <span id="runDays">0</span> <span>運用日数</span></div>
-            <div class="stat-item"><i class="fas fa-sync-alt"></i> <span id="lastUpdate">—</span> <span>最終更新</span></div>
-        </div>
-
-        <div class="notice-bar">
-            <i class="fas fa-bell"></i>
-            <span>✨ 欢迎来到二次元幻境 | 音乐陪伴每一刻 ✨</span>
-        </div>
-
-        <div class="time-ticker">
-            <div class="live-time" id="liveClock"></div>
-            <div class="scroll-area">
-                <div class="scroll-content" id="scrollText"></div>
+    <div class="blog-container">
+        <aside class="sidebar">
+            <div class="avatar-box">
+                <img class="avatar-img" src="/images/avatar.png" alt="avatar">
+                <div class="blog-name">汐音_Shione</div>
+                <div class="blog-bio">特別なことばかりで、君がいる十分です。</div>
             </div>
-        </div>
+            <div class="stats-card">
+                <div class="stat-item"><div class="stat-number" id="postCountStat">0</div><div class="stat-label">記事</div></div>
+                <div class="stat-item"><div class="stat-number" id="categoryCountStat">0</div><div class="stat-label">カテゴリー</div></div>
+                <div class="stat-item"><div class="stat-number" id="tagCountStat">0</div><div class="stat-label">タグ</div></div>
+                <div class="stat-item"><div class="stat-number" id="runDaysStat">0</div><div class="stat-label">運用日数</div></div>
+            </div>
+            <div class="notice-bar"><i class="fas fa-bell"></i><span>✨ 欢迎来到二次元幻境 | 音乐陪伴每一刻 ✨</span></div>
+            <div class="time-ticker">
+                <div class="live-time" id="liveClock"></div>
+                <div class="scroll-area"><div class="scroll-content" id="scrollText"></div></div>
+            </div>
+            <!-- 手机端呼出看板娘的按钮 -->
+            <button id="toggleWaifuBtn" class="toggle-waifu-btn">✨ 显示看板娘</button>
 
-        <div class="content-container">
-            <article class="post-full">
+            <!-- ========== 始终显示的“返回首页”按钮 ========== -->
+            <div class="return-home">
+                <a href="/" class="home-button"><i class="fas fa-home"></i> 返回首页</a>
+            </div>
+        </aside>
+        <main class="main-content"><article class="post-full">
     <div class="post-nav">
         <a href="/" class="back-home-btn">
             <i class="fas fa-home"></i> 返回首页
@@ -127,42 +205,30 @@
     <footer class="post-footer">
         <div class="post-copyright">✨ 原创文章，转载请注明出处 ~</div>
     </footer>
-</article>
-        </div>
-
-        <footer>
-            <div class="footer-social">
-                
-                    <a href="https://github.com/LongBai585" target="_blank"><i class="fab fa-github"></i></a>
-                
-                
-                    <a href="mailto:ym.yxzs.yllb.@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
-                
-            </div>
-            <div class="footer-text">
-                <i class="fas fa-music"></i> 夢とコードの狭間で  |  © 泷白 二次元·幻境 | v440
-            </div>
-        </footer>
+</article></main>
     </div>
+
+    <footer>
+        <div class="footer-social">
+            <a href="https://github.com/LongBai585" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="mailto:ym.yxzs.yllb.@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
+        </div>
+        <div class="footer-text"><i class="fas fa-music"></i> 夢とコードの狭間で  |  © 泷白 二次元·幻境 | v440</div>
+    </footer>
 </div>
 
-<!-- 网易云播放器 320x110 -->
-<div class="official-player-wrapper" id="officialPlayer">
-    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="320" height="110" src="https://music.163.com/outchain/player?type=0&id=17882023844&auto=0&height=110"></iframe>
-</div>
+<div id="waifuLoading" class="waifu-loading">✨ 看板娘加载中...</div>
 
-<!-- ========== 看板娘配置（官方核心库 + 你的模型 v1.2.0） ========== -->
+<!-- ========== 看板娘配置 ========== -->
 <script>
   (function() {
-    // 你的模型仓库标签
     const MY_VERSION = "v1.2.0";
     const officialCdn = "https://cdn.jsdelivr.net/gh/letere-gzj/live2d-widget-v3@main";
-    const myCdn = `https://cdn.jsdelivr.net/gh/LongBai585/static-resource@${MY_VERSION}`;
-
+    const myModelCdn = `https://cdn.jsdelivr.net/gh/LongBai585/static-resource@${MY_VERSION}`;
     const config = {
       path: {
         homePath: "/",
-        modelPath: myCdn + "/",
+        modelPath: myModelCdn + "/",
         cssPath: officialCdn + "/waifu.css",
         tipsJsonPath: officialCdn + "/waifu-tips.json",
         tipsJsPath: officialCdn + "/waifu-tips.js",
@@ -173,210 +239,128 @@
       drag: { enable: true, direction: ["x", "y"] },
       switchType: "order"
     };
-
     function loadResource(url, type) {
       return new Promise((resolve, reject) => {
-        let tag;
-        if (type === "css") {
-          tag = document.createElement("link");
-          tag.rel = "stylesheet";
-          tag.href = url;
-        } else if (type === "js") {
-          tag = document.createElement("script");
-          tag.src = url;
-        }
-        if (tag) {
-          tag.onload = () => resolve(url);
-          tag.onerror = () => reject(url);
-          document.head.appendChild(tag);
-        }
+        let tag = type === "css" ? document.createElement("link") : document.createElement("script");
+        if (type === "css") { tag.rel = "stylesheet"; tag.href = url; }
+        else { tag.src = url; }
+        tag.onload = () => resolve(url);
+        tag.onerror = () => reject(url);
+        document.head.appendChild(tag);
       });
     }
-
-    // 预检模型配置（适配你的嵌套数组格式）
-    async function validateModels() {
-      try {
-        const res = await fetch(config.path.modelPath + "model_list.json");
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
-        // 扁平化处理：支持 { models: [[...], [...]] } 或直接数组
-        let modelsArray = [];
-        if (Array.isArray(data)) {
-          modelsArray = data;
-        } else if (data.models && Array.isArray(data.models)) {
-          for (let group of data.models) {
-            if (Array.isArray(group)) {
-              modelsArray.push(...group);
-            }
-          }
-        } else {
-          throw new Error("model_list.json 格式不支持");
-        }
-        console.log(`[Live2D] 共发现 ${modelsArray.length} 个模型:`, modelsArray);
-        
-        let validCount = 0;
-        for (const modelName of modelsArray) {
-          // 尝试两种可能的配置文件路径
-          const pathsToTry = [
-            config.path.modelPath + `model/${modelName}/index.json`,
-            config.path.modelPath + `model/${modelName}/${modelName}.model3.json`
-          ];
-          let configRes = null;
-          for (const url of pathsToTry) {
-            try {
-              const testRes = await fetch(url, { method: 'HEAD' });
-              if (testRes.ok) {
-                configRes = await fetch(url);
-                break;
-              }
-            } catch(e) {}
-          }
-          if (!configRes) {
-            console.error(`❌ 模型 "${modelName}" 的配置文件未找到`);
-            continue;
-          }
-          const json = await configRes.json();
-          const mocFile = json.FileReferences?.Moc;
-          if (!mocFile) {
-            console.error(`❌ 模型 "${modelName}" 未指定 Moc 文件`);
-            continue;
-          }
-          const baseDir = configRes.url.substring(0, configRes.url.lastIndexOf('/') + 1);
-          const mocUrl = baseDir + mocFile;
-          const mocCheck = await fetch(mocUrl, { method: 'HEAD' });
-          if (mocCheck.ok) {
-            console.log(`✅ 模型 "${modelName}" 的 .moc3 文件存在`);
-            validCount++;
-          } else {
-            console.error(`❌ 模型 "${modelName}" 缺少 .moc3 文件: ${mocUrl}`);
-          }
-        }
-        console.log(`[Live2D] 有效模型: ${validCount}/${modelsArray.length}`);
-        return validCount > 0;
-      } catch (e) {
-        console.error("[Live2D] model_list.json 加载失败:", e);
-        return false;
-      }
+    const loadingEl = document.getElementById('waifuLoading');
+    function showLoading(show) { if (loadingEl) { if (show) loadingEl.classList.add('show'); else loadingEl.classList.remove('show'); } }
+    let retryCount = 0, MAX_RETRY = 2;
+    function initWaifu() {
+      showLoading(true);
+      Promise.all([
+        loadResource(config.path.cssPath, "css"),
+        loadResource(config.path.live2dCorePath, "js"),
+        loadResource(config.path.live2dSdkPath, "js"),
+        loadResource(config.path.tipsJsPath, "js")
+      ]).then(() => {
+        if (typeof initWidget === "function") {
+          initWidget({
+            waifuPath: config.path.tipsJsonPath,
+            cdnPath: config.path.modelPath,
+            tools: config.tools,
+            dragEnable: config.drag.enable,
+            dragDirection: config.drag.direction,
+            switchType: config.switchType
+          });
+          setTimeout(() => showLoading(false), 2000);
+        } else throw new Error("initWidget not found");
+      }).catch(err => {
+        console.error("[Live2D] 加载失败:", err);
+        if (retryCount < MAX_RETRY) { retryCount++; setTimeout(initWaifu, 3000); }
+        else showLoading(false);
+      });
     }
-
     if (screen.width >= 768) {
-      validateModels().then(hasValidModels => {
-        if (!hasValidModels) {
-          console.warn("[Live2D] 没有有效模型，看板娘不加载");
-          return;
-        }
-        Promise.all([
-          loadResource(config.path.cssPath, "css"),
-          loadResource(config.path.live2dCorePath, "js"),
-          loadResource(config.path.live2dSdkPath, "js"),
-          loadResource(config.path.tipsJsPath, "js")
-        ]).then(() => {
-          if (typeof initWidget === "function") {
-            console.log("[Live2D] 初始化看板娘，模型路径:", config.path.modelPath);
-            initWidget({
-              waifuPath: config.path.tipsJsonPath,
-              cdnPath: config.path.modelPath,
-              tools: config.tools,
-              dragEnable: config.drag.enable,
-              dragDirection: config.drag.direction,
-              switchType: config.switchType
-            });
-          } else {
-            console.error("[Live2D] initWidget 未定义");
-          }
-        }).catch(err => {
-          console.error("[Live2D] 核心资源加载失败:", err);
-        });
-      });
+      if (window.requestIdleCallback) requestIdleCallback(() => initWaifu(), { timeout: 2000 });
+      else setTimeout(initWaifu, 500);
+    } else {
+      setTimeout(initWaifu, 1000);
     }
   })();
 </script>
 
-<!-- ========== 水印切换功能（电脑 Ctrl+M，手机双击画布） ========== -->
+<!-- ========== 手机端看板娘显示/隐藏控制 ========== -->
 <script>
   (function() {
-    const WATERMARK_PARAM = "ParamWatermark"; // 根据实际模型修改
-    let watermarkState = 1;
+    const isMobile = screen.width <= 768;
+    if (!isMobile) return;
 
-    function setWatermarkParam(value) {
-      if (window.live2d && typeof window.live2d.setParameter === 'function') {
-        window.live2d.setParameter(WATERMARK_PARAM, value);
-        return true;
-      }
-      const canvas = document.getElementById('live2d');
-      if (canvas && canvas.live2dModel && typeof canvas.live2dModel.setParameterValue === 'function') {
-        canvas.live2dModel.setParameterValue(WATERMARK_PARAM, value);
-        return true;
-      }
-      return false;
+    const waifuDiv = document.getElementById('waifu');
+    const toggleBtn = document.getElementById('toggleWaifuBtn');
+    if (!waifuDiv || !toggleBtn) return;
+
+    let waifuVisible = localStorage.getItem('waifu_visible_mobile');
+    if (waifuVisible === null) {
+      waifuVisible = '0';
     }
-
-    function toggleWatermark() {
-      const newValue = watermarkState === 1 ? 0 : 1;
-      const success = setWatermarkParam(newValue);
-      if (success) {
-        watermarkState = newValue;
-        if (typeof showMessage === 'function') {
-          showMessage(watermarkState === 1 ? '💧 水印已显示' : '✨ 水印已隐藏', 2000);
-        }
+    function updateUI() {
+      if (waifuVisible === '1') {
+        waifuDiv.style.display = 'block';
+        toggleBtn.innerHTML = '✨ 隐藏看板娘';
       } else {
-        if (typeof showMessage === 'function') {
-          showMessage('⚠️ 当前模型不支持水印参数切换', 2000);
-        }
-        console.warn(`[Watermark] 无法设置参数 ${WATERMARK_PARAM}`);
+        waifuDiv.style.display = 'none';
+        toggleBtn.innerHTML = '✨ 显示看板娘';
       }
     }
+    updateUI();
 
-    document.addEventListener('keydown', (e) => {
-      if (e.ctrlKey && e.key === 'm') {
-        e.preventDefault();
-        toggleWatermark();
+    toggleBtn.addEventListener('click', () => {
+      if (waifuVisible === '1') {
+        waifuVisible = '0';
+      } else {
+        waifuVisible = '1';
       }
+      localStorage.setItem('waifu_visible_mobile', waifuVisible);
+      updateUI();
     });
-
-    let lastTouchEnd = 0;
-    const canvas = document.getElementById('live2d');
-    if (canvas) {
-      canvas.addEventListener('touchend', (e) => {
-        const now = Date.now();
-        if (now - lastTouchEnd < 300) {
-          e.preventDefault();
-          toggleWatermark();
-        }
-        lastTouchEnd = now;
-      });
-    }
-
-    setTimeout(() => {
-      if (typeof showMessage === 'function') {
-        showMessage('💡 电脑 Ctrl+M / 手机双击画布 可切换水印', 5000);
-      }
-    }, 3000);
   })();
 </script>
+
+<!-- ========== 浮动播放器 ========== -->
+<div class="floating-player" id="floatingPlayer">
+    <link rel="stylesheet" href="https://api.hypcvgm.top/NeteaseMiniPlayer/netease-mini-player-v2.css">
+    <script src="https://api.hypcvgm.top/NeteaseMiniPlayer/netease-mini-player-v2.js"></script>
+    <div class="netease-mini-player" data-playlist-id="17882023844" data-position="static" data-lyric="true" data-theme="auto" data-autoplay="false" data-volume="0.6"></div>
+</div>
+
+<div id="backToTop" class="back-to-top"><i class="fas fa-arrow-up"></i></div>
 
 <!-- ========== 模型切换快捷键（Ctrl+Shift+M） ========== -->
 <script>
   (function() {
-    function bindModelShortcut() {
-      if (typeof loadOtherModel !== 'function') {
-        setTimeout(bindModelShortcut, 100);
-        return;
-      }
+    function bindShortcut() {
+      if (typeof loadOtherModel !== 'function') { setTimeout(bindShortcut, 100); return; }
       document.addEventListener('keydown', (e) => {
         if (e.ctrlKey && e.shiftKey && e.key === 'm') {
           e.preventDefault();
-          if (typeof showMessage === 'function') {
-            showMessage('✨ 切换模型 ✨', 2000);
-          }
+          if (typeof showMessage === 'function') showMessage('✨ 切换模型 ✨', 2000);
+          else console.log("[模型] 切换模型");
           loadOtherModel();
         }
       });
     }
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', bindModelShortcut);
-    } else {
-      bindModelShortcut();
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bindShortcut);
+    else bindShortcut();
+  })();
+</script>
+
+<!-- ========== 返回顶部逻辑 ========== -->
+<script>
+  (function() {
+    const backBtn = document.getElementById('backToTop');
+    if (backBtn) {
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) backBtn.classList.add('show');
+        else backBtn.classList.remove('show');
+      });
+      backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     }
   })();
 </script>
